@@ -126,6 +126,24 @@ docker stop workshop-app mariadb-workshop
 docker rm workshop-app mariadb-workshop
 ```
 
+## CORS Configuration
+
+The backend includes CORS middleware configured to allow browser requests from the frontend:
+
+```python
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+This enables the React frontend to make API calls without cross-origin restrictions.
+
 ## Database Schema
 
 The application expects an existing `ORDERS` table with the following structure:
@@ -140,4 +158,43 @@ CREATE TABLE ORDERS (
 
 ## API Documentation
 
-Once running, visit `http://localhost:8000/docs` for interactive API documentation.
+Once running, visit `http://localhost:8000/docs` for interactive API documentation powered by Swagger UI.
+
+### Available Endpoints
+
+- `GET /` - Root endpoint with API information
+- `GET /health` - Health check endpoint
+- `GET /api/v1/orders/` - List all orders (supports pagination with `skip` and `limit` parameters)
+- `POST /api/v1/orders/` - Create a new order
+- `GET /api/v1/orders/{order_id}` - Get a specific order by ID
+- `PUT /api/v1/orders/{order_id}` - Update an existing order
+- `DELETE /api/v1/orders/{order_id}` - Delete an order
+
+### Request/Response Examples
+
+**Create Order:**
+```bash
+curl -X POST "http://localhost:8000/api/v1/orders/" \
+  -H "Content-Type: application/json" \
+  -d '{"OrderData": "New order description"}'
+```
+
+**Get All Orders:**
+```bash
+curl "http://localhost:8000/api/v1/orders/"
+```
+
+**Update Order:**
+```bash
+curl -X PUT "http://localhost:8000/api/v1/orders/1" \
+  -H "Content-Type: application/json" \
+  -d '{"OrderData": "Updated order description"}'
+```
+
+## Integration with Frontend
+
+The backend is designed to work seamlessly with the React frontend located in the `../frontend` directory. The frontend communicates with this API to provide a complete order management interface.
+
+Ensure both services are running for full application functionality:
+- Backend: http://localhost:8000
+- Frontend: http://localhost:3000
