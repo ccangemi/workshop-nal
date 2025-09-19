@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import Response
 from dotenv import load_dotenv
 from app.routes.orders import router as orders_router
+from app.metrics import get_metrics, get_content_type
+from app.middleware.metrics_middleware import MetricsMiddleware
 
 load_dotenv()
 
@@ -11,7 +14,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Configure CORS
+# Configure middlewares
+app.add_middleware(MetricsMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
@@ -29,6 +33,11 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+@app.get("/metrics")
+def metrics():
+    """OpenMetrics endpoint for Prometheus scraping"""
+    return Response(content=get_metrics(), media_type=get_content_type())
 
 if __name__ == "__main__":
     import uvicorn

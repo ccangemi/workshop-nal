@@ -4,6 +4,7 @@ from typing import List
 from app.config.database import get_db
 from app.models.order import OrderCreate, OrderUpdate, OrderResponse
 from app.repositories.order_repository import OrderRepository
+from app.metrics import orders_created_total, orders_updated_total, orders_deleted_total, orders_total
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 
@@ -12,6 +13,7 @@ def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     repository = OrderRepository(db)
     try:
         db_order = repository.create_order(order)
+        orders_created_total.inc()
         return db_order
     except Exception as e:
         raise HTTPException(
@@ -23,6 +25,9 @@ def create_order(order: OrderCreate, db: Session = Depends(get_db)):
 def get_orders(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     repository = OrderRepository(db)
     orders = repository.get_orders(skip=skip, limit=limit)
+    # Update total orders count
+    total_orders = repository.get_orders_count()
+    orders_total.set(total_orders)
     return orders
 
 @router.get("/{order_id}", response_model=OrderResponse)
@@ -46,6 +51,7 @@ def update_order(order_id: int, order: OrderUpdate, db: Session = Depends(get_db
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found"
             )
+        orders_updated_total.inc()
         return db_order
     except Exception as e:
         raise HTTPException(
@@ -63,6 +69,7 @@ def delete_order(order_id: int, db: Session = Depends(get_db)):
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Order not found"
             )
+        orders_deleted_total.inc()
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

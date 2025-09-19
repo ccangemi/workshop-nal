@@ -24,6 +24,9 @@ class OrderRepository:
     def get_orders(self, skip: int = 0, limit: int = 100) -> List[Order]:
         return self.db.query(Order).offset(skip).limit(limit).all()
 
+    def get_orders_count(self) -> int:
+        return self.db.query(Order).count()
+
     def update_order(self, order_id: int, order_data: OrderUpdate) -> Optional[Order]:
         try:
             db_order = self.db.query(Order).filter(Order.OrderId == order_id).first()
