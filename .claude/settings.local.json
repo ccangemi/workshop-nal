@@ -2,7 +2,14 @@
   "permissions": {
     "allow": [
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker start:*)",
+      "Bash(docker rm:*)",
+      "Bash(docker run:*)",
+      "Bash(curl:*)",
+      "Bash(docker build:*)",
+      "Bash(docker logs:*)"
     ],
     "deny": [],
     "ask": []
