@@ -9,7 +9,8 @@
       "Bash(docker run:*)",
       "Bash(curl:*)",
       "Bash(docker build:*)",
-      "Bash(docker logs:*)"
+      "Bash(docker logs:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
