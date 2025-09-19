@@ -1,65 +1,65 @@
-# OpenShift Deployment Workshop
+# Workshop di Deployment su OpenShift
 
-## Workshop Overview
+## Panoramica del Workshop
 
-This workshop guides you through deploying a complete 3-tier containerized application to OpenShift. The application consists of:
+Questo workshop ti guida attraverso il deployment di un'applicazione containerizzata completa a 3 livelli su OpenShift. L'applicazione è composta da:
 - **Frontend**: React TypeScript SPA
 - **Backend**: Python FastAPI REST API
 - **Database**: MariaDB
 
-## Prerequisites
+## Prerequisiti
 
-- OpenShift CLI (`oc`) installed
-- Access to an OpenShift cluster
-- Docker images built or access to container registry
+- OpenShift CLI (`oc`) installato
+- Accesso a un cluster OpenShift
+- Immagini Docker costruite o accesso a container registry
 
-## Workshop Steps
+## Passi del Workshop
 
-### Step 1: Environment Setup
-- [ ] Login to OpenShift cluster
-- [ ] Create new project/namespace
-- [ ] Verify cluster access
+### Passo 1: Configurazione dell'Ambiente
+- [ ] Login al cluster OpenShift
+- [ ] Creazione di un nuovo progetto/namespace
+- [ ] Verifica dell'accesso al cluster
 
-### Step 2: Database Deployment
-- [ ] Deploy MariaDB
-- [ ] Configure persistent storage
-- [ ] Set up database credentials
-- [ ] Verify database connectivity
+### Passo 2: Deployment del Database
+- [ ] Deploy di MariaDB
+- [ ] Configurazione dello storage persistente
+- [ ] Impostazione delle credenziali del database
+- [ ] Verifica della connettività del database
 
-### Step 3: Backend API Deployment
-- [ ] Deploy FastAPI application
-- [ ] Configure environment variables
-- [ ] Set up database connection
-- [ ] Create service and expose routes
+### Passo 3: Deployment dell'API Backend
+- [ ] Deploy dell'applicazione FastAPI
+- [ ] Configurazione delle variabili d'ambiente
+- [ ] Impostazione della connessione al database
+- [ ] Creazione del service e esposizione delle route
 
-### Step 4: Frontend Deployment
-- [ ] Deploy React application
-- [ ] Configure API endpoint
-- [ ] Set up Nginx serving
-- [ ] Create service and routes
+### Passo 4: Deployment del Frontend
+- [ ] Deploy dell'applicazione React
+- [ ] Configurazione dell'endpoint API
+- [ ] Impostazione del serving con Nginx
+- [ ] Creazione del service e delle route
 
-### Step 5: Integration Testing
-- [ ] Test complete application flow
-- [ ] Verify inter-service communication
-- [ ] Check application functionality
+### Passo 5: Test di Integrazione
+- [ ] Test del flusso completo dell'applicazione
+- [ ] Verifica della comunicazione tra i servizi
+- [ ] Controllo della funzionalità dell'applicazione
 
-### Step 6: Scaling and Management
-- [ ] Scale application components
-- [ ] Monitor resource usage
-- [ ] Configure health checks
-- [ ] Set up logging
+### Passo 6: Scaling e Gestione
+- [ ] Scaling dei componenti dell'applicazione
+- [ ] Monitoraggio dell'utilizzo delle risorse
+- [ ] Configurazione degli health check
+- [ ] Impostazione del logging
 
-## Expected Outcomes
+## Risultati Attesi
 
-By the end of this workshop, participants will have:
-- Deployed a complete 3-tier application on OpenShift
-- Understood OpenShift deployment patterns
-- Configured persistent storage for databases
-- Set up service communication and routing
-- Implemented monitoring and scaling strategies
+Al termine di questo workshop, i partecipanti avranno:
+- Fatto il deploy di un'applicazione completa a 3 livelli su OpenShift
+- Compreso i pattern di deployment di OpenShift
+- Configurato lo storage persistente per i database
+- Impostato la comunicazione tra servizi e il routing
+- Implementato strategie di monitoraggio e scaling
 
-## Additional Resources
+## Risorse Aggiuntive
 
-- [OpenShift Documentation](https://docs.openshift.com/)
-- [Container Best Practices](https://developers.redhat.com/blog/2016/02/24/10-things-to-avoid-in-docker-containers)
-- [12-Factor App Methodology](https://12factor.net/)
+- [Documentazione OpenShift](https://docs.openshift.com/)
+- [Best Practice per Container](https://developers.redhat.com/blog/2016/02/24/10-things-to-avoid-in-docker-containers)
+- [Metodologia 12-Factor App](https://12factor.net/)
