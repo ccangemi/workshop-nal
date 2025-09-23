@@ -103,6 +103,11 @@ Iniziamo creando il DB nel quale verranno registrati permanentemente gli ordini
 - Eseguire script di inizializzazione del DB: `./openshift/init-db.bat`
 
 ### Passo 3: Deployment dell'API Backend
+Procediamo creando lo strato di backend dell'applicazione. Questo container sa collegarsi al DB ed espone i propri servizi tramite REST API
+
+- Creare il deployment del backend: `oc create -f ./openshift/backend-deployment.yaml`
+- _Osserviamo gli oggetti creati: Deployment, Service, Route, ConfigMap_
+
 - [ ] Deploy dell'applicazione FastAPI
 - [ ] Configurazione delle variabili d'ambiente
 - [ ] Impostazione della connessione al database

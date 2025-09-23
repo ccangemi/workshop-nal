@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workshop-backend
+  labels:
+    app: workshop-backend
+    component: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workshop-backend
+  template:
+    metadata:
+      labels:
+        app: workshop-backend
+        component: api
+    spec:
+      containers:
+      - name: workshop-backend
+        image: postesviluppo.azurecr.io/cangem/workshop-backend:latest
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        env:
+        - name: DATABASE_CONNECTION_STRING
+          valueFrom:
+            configMapKeyRef:
+              name: workshop-backend-config
+              key: database-connection-string
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "50m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workshop-backend-config
+  labels:
+    app: workshop-backend
+data:
+  database-connection-string: "mysql+pymysql://workshop:workshop123@mariadb:3306/workshop_db"
+#  database-connection-string: 'mssql+pymssql://defaultMssqladmin:jqIGA9lx8Z_8D@%R@saiworkshopsql01azwe.database.windows.net:1433/db01'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: workshop-backend
+  labels:
+    app: workshop-backend
+    component: api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8000
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: workshop-backend
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: workshop-backend
+  labels:
+    app: workshop-backend
+    component: api
+spec:
+  to:
+    kind: Service
+    name: workshop-backend
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
