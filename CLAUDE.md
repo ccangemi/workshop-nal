@@ -70,8 +70,9 @@ workshop/
 ### Database
 - **Engine**: MariaDB latest with persistent volumes
 - **Schema**: Orders table with auto-increment ID and timestamps
-- **Initialization**: SQL scripts for table creation and sample data
+- **Initialization**: Automatic SQL scripts execution via `/docker-entrypoint-initdb.d/`
 - **Connection**: MySQL+PyMySQL driver for Python integration
+- **Auto-Setup**: Tables and sample data created automatically on container startup
 
 ## Development Workflow
 
@@ -99,8 +100,8 @@ workshop/
 
 ### Complete Stack Startup
 ```bash
-# Database
-docker run -d --name mariadb-workshop -e MYSQL_ROOT_PASSWORD=workshop123 -e MYSQL_DATABASE=orders_db -e MYSQL_USER=workshop -e MYSQL_PASSWORD=workshop123 -p 3306:3306 mariadb:latest
+# Database with automatic table initialization
+docker run -d --name mariadb-workshop -e MYSQL_ROOT_PASSWORD=workshop123 -e MYSQL_DATABASE=orders_db -e MYSQL_USER=workshop -e MYSQL_PASSWORD=workshop123 -v "$(pwd)/db-init:/docker-entrypoint-initdb.d" -p 3306:3306 mariadb:latest
 
 # Backend
 docker build -t workshop-backend ./backend
