@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: example
+  labels:
+    app: httpd
+spec:
+  securityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: httpd
+      image: 'image-registry.openshift-image-registry.svc:5000/openshift/httpd:latest'
+      ports:
+        - containerPort: 8080
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
