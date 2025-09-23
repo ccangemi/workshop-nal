@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine as build
+FROM quay.io/lib/node:22.19.0-alpine AS build
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM quay.io/nginx/nginx-unprivileged:alpine-slim
 
 # Copy built app to nginx
 COPY --from=build /app/build /usr/share/nginx/html
@@ -24,11 +24,15 @@ COPY --from=build /app/build /usr/share/nginx/html
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy and make executable the entrypoint script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+# Make the html directory writable for the nginx user so we can update config.js at runtime
+USER root
+RUN chown -R nginx:nginx /usr/share/nginx/html && chmod -R 755 /usr/share/nginx/html
+USER nginx
 
-EXPOSE 80
+# Copy and make executable the entrypoint script
+COPY --chmod=755 docker-entrypoint.sh /docker-entrypoint.sh
+
+EXPOSE 8080
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
