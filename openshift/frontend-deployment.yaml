@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workshop-frontend
+  labels:
+    app: workshop-frontend
+    component: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: workshop-frontend
+  template:
+    metadata:
+      labels:
+        app: workshop-frontend
+        component: web
+    spec:
+      containers:
+      - name: workshop-frontend
+        image: postesviluppo.azurecr.io/cangem/workshop-frontend:latest
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        env:
+        - name: API_URL
+          valueFrom:
+            configMapKeyRef:
+              name: workshop-frontend-config
+              key: api-url
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 5
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "25m"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workshop-frontend-config
+  labels:
+    app: workshop-frontend
+data:
+  api-url: "https://workshop-backend-test.apps.ocp4azexp2.cloudsvil.poste.it"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: workshop-frontend
+  labels:
+    app: workshop-frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: workshop-frontend
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: workshop-frontend
+  labels:
+    app: workshop-frontend
+spec:
+  to:
+    kind: Service
+    name: workshop-frontend
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

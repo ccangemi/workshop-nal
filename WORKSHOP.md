@@ -106,12 +106,15 @@ Iniziamo creando il DB nel quale verranno registrati permanentemente gli ordini
 Procediamo creando lo strato di backend dell'applicazione. Questo container sa collegarsi al DB ed espone i propri servizi tramite REST API
 
 - Creare il deployment del backend: `oc create -f ./openshift/backend-deployment.yaml`
-- _Osserviamo gli oggetti creati: Deployment, Service, Route, ConfigMap_
-
-- [ ] Deploy dell'applicazione FastAPI
-- [ ] Configurazione delle variabili d'ambiente
-- [ ] Impostazione della connessione al database
-- [ ] Creazione del service e esposizione delle route
+- _Osserviamo gli oggetti creati: Deployment, ConfigMap_
+- Creare gli oggetti di rete del backend: `oc create -f ./openshift/backend-network.yaml`
+- _Osserviamo gli oggetti creati: Service, Route_
+- Visualizzare le REST APIs esposte dal backend: 
+    - Aprire il browser su: https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/docs
+- Provare ad interrogare la rotta per ottenere la lista degli ordini: `curl.exe 'https://workshop-backend-test.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'`  
+  **Usare `curl.exe` su Windows non semplicemente `curl`**
+- Scalare il deployment: `oc scale deployment workshop-backend --replicas=3`
+- _Verificare che la curl continui a funzionare. Il service fa da smistatore_
 
 ### Passo 4: Deployment del Frontend
 - [ ] Deploy dell'applicazione React
@@ -129,6 +132,10 @@ Procediamo creando lo strato di backend dell'applicazione. Questo container sa c
 - [ ] Monitoraggio dell'utilizzo delle risorse
 - [ ] Configurazione degli health check
 - [ ] Impostazione del logging
+
+https://gitlab.alm.poste.it/hybridcloud/gen3/observability-2.0/otel-for-metrics-app/-/blob/develop/deploy-cli/values.yaml
+
+https://g-fd80ee42f3.grafana-workspace.eu-central-1.amazonaws.com/explore?orgId=1&left=%7B%22datasource%22:%22Ato7-MaIz%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22prometheus%22,%22uid%22:%22Ato7-MaIz%22%7D,%22editorMode%22:%22code%22,%22expr%22:%22%7Bcluster_name%3D%5C%22ocp4azexp2.cloudsvil.poste.it%5C%22%7D%22,%22legendFormat%22:%22__auto%22,%22range%22:true,%22instant%22:true%7D%5D,%22range%22:%7B%22from%22:%22now-5m%22,%22to%22:%22now%22%7D%7D
 
 ## Risultati Attesi
 
