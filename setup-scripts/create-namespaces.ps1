@@ -36,9 +36,9 @@ function New-WorkshopNamespace {
             if ($LASTEXITCODE -ne 0) { throw "Failed to create namespace" }
         }
         
-        Write-Host "Adding label..." -ForegroundColor Green
-        oc label namespace $namespaceName nal-ws=true --overwrite
-        if ($LASTEXITCODE -ne 0) { throw "Failed to add label" }
+        Write-Host "Adding labels..." -ForegroundColor Green
+        oc label namespace $namespaceName nal-ws=true admission-webhook=false --overwrite
+        if ($LASTEXITCODE -ne 0) { throw "Failed to add labels" }
         
         Write-Host "Creating rolebinding..." -ForegroundColor Green
         oc create rolebinding "$Username-admin" --clusterrole=admin --user=$Username -n $namespaceName 2>$null
