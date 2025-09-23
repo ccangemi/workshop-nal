@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM quay.io/fedora/python-312-minimal
 
 WORKDIR /app
 
