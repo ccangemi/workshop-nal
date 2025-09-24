@@ -117,17 +117,19 @@ Procediamo creando lo strato di backend dell'applicazione. Questo container sa c
 - _Verificare che la curl continui a funzionare. Il service fa da smistatore_
 
 ### Passo 4: Deployment del Frontend
-- [ ] Deploy dell'applicazione React
-- [ ] Configurazione dell'endpoint API
-- [ ] Impostazione del serving con Nginx
-- [ ] Creazione del service e delle route
+Completiamo lo stack aggiungendo l'ultimo layer: il frontend
 
-### Passo 5: Test di Integrazione
-- [ ] Test del flusso completo dell'applicazione
-- [ ] Verifica della comunicazione tra i servizi
-- [ ] Controllo della funzionalità dell'applicazione
+- Creare il deployment del frontend: `oc create -f ./openshift/frontend-deployment.yaml`
+- Visualizzare la url per accedere alla web app appena deployata: `oc get route workshop-frontend -o jsonpath='{.spec.host}'`
+- Aprire browser e andare all'indirizzo prelevato da HOST/PORT
+- Testare l'app creando/visualizzando/editando/cancellando gli ordini
 
-### Passo 6: Scaling e Gestione
+### Passo 5: Osservabilità
+
+https://gitlab.alm.poste.it/hybridcloud/gen3/observability-2.0/otel-for-metrics-app.git
+
+
+### Passo 5: Scaling e Gestione
 - [ ] Scaling dei componenti dell'applicazione
 - [ ] Monitoraggio dell'utilizzo delle risorse
 - [ ] Configurazione degli health check
