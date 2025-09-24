@@ -4,7 +4,7 @@ from typing import List
 from app.config.database import get_db
 from app.models.order import OrderCreate, OrderUpdate, OrderResponse
 from app.repositories.order_repository import OrderRepository
-from app.metrics import orders_created_total, orders_updated_total, orders_deleted_total, orders_total
+from app.metrics import orders_created_total, orders_updated_total, orders_deleted_total, orders_total, update_orders_total_metric
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 
@@ -14,6 +14,8 @@ def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     try:
         db_order = repository.create_order(order)
         orders_created_total.inc()
+        # Update total orders count
+        update_orders_total_metric(db)
         return db_order
     except Exception as e:
         raise HTTPException(
@@ -26,8 +28,7 @@ def get_orders(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     repository = OrderRepository(db)
     orders = repository.get_orders(skip=skip, limit=limit)
     # Update total orders count
-    total_orders = repository.get_orders_count()
-    orders_total.set(total_orders)
+    update_orders_total_metric(db)
     return orders
 
 @router.get("/{order_id}", response_model=OrderResponse)
@@ -70,6 +71,8 @@ def delete_order(order_id: int, db: Session = Depends(get_db)):
                 detail="Order not found"
             )
         orders_deleted_total.inc()
+        # Update total orders count
+        update_orders_total_metric(db)
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,

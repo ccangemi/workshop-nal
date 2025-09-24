@@ -54,6 +54,17 @@ orders_deleted_total = Counter(
     'Total number of orders deleted'
 )
 
+def update_orders_total_metric(db_session):
+    """Update orders_total metric with current count from database"""
+    try:
+        from app.repositories.order_repository import OrderRepository
+        repository = OrderRepository(db_session)
+        total_orders = repository.get_orders_count()
+        orders_total.set(total_orders)
+    except Exception:
+        # Ignore errors in metrics collection
+        pass
+
 def update_system_metrics():
     """Update system metrics with current values"""
     try:
@@ -73,6 +84,17 @@ def update_system_metrics():
 def get_metrics():
     """Generate and return metrics in OpenMetrics format"""
     update_system_metrics()
+    # Also try to update orders_total when metrics are requested
+    try:
+        from app.config.database import db_config
+        db = next(db_config.get_db())
+        try:
+            update_orders_total_metric(db)
+        finally:
+            db.close()
+    except Exception:
+        # Ignore errors - metrics collection should not fail the request
+        pass
     return generate_latest()
 
 def get_content_type():
