@@ -105,6 +105,8 @@ Iniziamo creando il DB nel quale verranno registrati permanentemente gli ordini
 ### Passo 3: Deployment dell'API Backend
 Procediamo creando lo strato di backend dell'applicazione. Questo container sa collegarsi al DB ed espone i propri servizi tramite REST API
 
+- Buildiamo l'immagine: `docker build .\backend\ -t postesviluppo.azurecr.io/cangem/workshop-backend`
+- _L'immagine va pushata sul registry_
 - Creare il deployment del backend: `oc create -f ./openshift/backend-deployment.yaml`
 - _Osserviamo gli oggetti creati: Deployment, ConfigMap_
 - Creare gli oggetti di rete del backend: `oc create -f ./openshift/backend-network.yaml`
