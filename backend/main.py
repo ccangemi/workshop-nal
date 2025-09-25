@@ -1,4 +1,7 @@
 import os
+# Disable Prometheus _created metrics before any prometheus imports
+os.environ['PROMETHEUS_DISABLE_CREATED_SERIES'] = 'True'
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
