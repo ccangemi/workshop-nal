@@ -4,6 +4,7 @@ metadata:
   name: mariadb
   labels:
     app: mariadb
+    app.openshift.io/runtime: mariadb
 spec:
   serviceName: mariadb
   replicas: 1

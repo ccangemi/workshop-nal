@@ -125,19 +125,33 @@ Completiamo lo stack aggiungendo l'ultimo layer: il frontend
 - Testare l'app creando/visualizzando/editando/cancellando gli ordini
 
 ### Passo 5: Osservabilità
+In questa ultima sezione installeremo un collettore che si occupa di raccogliere le metriche applicative esposte dal backend.
 
-https://gitlab.alm.poste.it/hybridcloud/gen3/observability-2.0/otel-for-metrics-app.git
+- Per visualizzare le metriche esposte, collegarsi alla rotta del backend: `oc get route workshop-backend -o jsonpath='{.spec.host}'` e aggiungere il path `/metrics` all'url appena estratta.
+- _Verificare le metriche ed il loro scopo_
+- _Osservare le annotation del Deployment/Pod del backend_: `oc get deployment workshop-backed -oyaml`
+- Aprire una nuova istanza di VSCode: File -> New Window`
+- Espandere il menù a sinistra di VSCode -> Explorer
+- Selezionare "Clone Repository" ed inserire `https://gitlab.alm.poste.it/hybridcloud/gen3/observability-2.0/otel-for-metrics-app.git`
+- Selezionare una cartella dove scaricare il repo sulla propria macchina locale
+- Una volta terminato il clone, scegliere "Open" per aprire il repo appena scaricato
+- Confermare con "Yes, I trust the authors" in caso di popup di autorizzazione
 
+- _Cosa è un chart_
+- Aprire il file ./deploy-cli/values.yaml
+- Personalizzare l'attributo: 
+  ```yaml
+  [...]
+  regex_metric_relabel_configs: "orders.*"
+  [...]
+  ```
+- effettuare l'installazione del chart nel proprio namespace: `helm upgrade otel --install .\.helm\ -n <proprio_namespace> -f .\deploy-cli\values.yaml`
+- Le metriche da ora in poi sono collezionate nel sistema centralizzato
+- _Visualizzare la dashboard (**solo l'istruttore**)_
 
-### Passo 5: Scaling e Gestione
-- [ ] Scaling dei componenti dell'applicazione
-- [ ] Monitoraggio dell'utilizzo delle risorse
-- [ ] Configurazione degli health check
-- [ ] Impostazione del logging
-
-https://gitlab.alm.poste.it/hybridcloud/gen3/observability-2.0/otel-for-metrics-app/-/blob/develop/deploy-cli/values.yaml
-
-https://g-fd80ee42f3.grafana-workspace.eu-central-1.amazonaws.com/explore?orgId=1&left=%7B%22datasource%22:%22Ato7-MaIz%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22prometheus%22,%22uid%22:%22Ato7-MaIz%22%7D,%22editorMode%22:%22code%22,%22expr%22:%22orders_total%7Bcluster_name%3D%5C%22ocp4azexp2.cloudsvil.poste.it%5C%22,%20namespace%3D%5C%22test%5C%22%7D%22,%22legendFormat%22:%22__auto%22,%22range%22:true,%22instant%22:true%7D%5D,%22range%22:%7B%22from%22:%22now-5m%22,%22to%22:%22now%22%7D%7D
+# Passo 6: collegare il database
+- _Cambiare il puntamento del backend affinché salvi su DB creato precedentemente tramite IaC (**solo l'istruttore**)_
+- _Simulare la creazione di un ordine con successivo invio di email
 
 ## Risultati Attesi
 
@@ -153,3 +167,4 @@ Al termine di questo workshop, i partecipanti avranno:
 - [Documentazione OpenShift](https://docs.openshift.com/)
 - [Best Practice per Container](https://developers.redhat.com/blog/2016/02/24/10-things-to-avoid-in-docker-containers)
 - [Metodologia 12-Factor App](https://12factor.net/)
+- [Observability 2.0](https://gitlab.alm.poste.it/hybridcloud/gen3/observability-2.0/otel-for-metrics-app.git)

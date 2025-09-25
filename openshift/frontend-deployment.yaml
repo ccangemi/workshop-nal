@@ -5,6 +5,7 @@ metadata:
   labels:
     app: workshop-frontend
     component: web
+    app.openshift.io/runtime: react
 spec:
   replicas: 2
   selector:

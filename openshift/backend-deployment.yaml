@@ -5,6 +5,7 @@ metadata:
   labels:
     app: workshop-backend
     component: api
+    app.openshift.io/runtime: python
 spec:
   replicas: 1
   selector:
