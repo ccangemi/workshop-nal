@@ -98,7 +98,17 @@ chart/
 
 ---
 
-## ⚙️ Configurazione e installazione
+## ⚙️ Configurazione e installazione di OTEL for metrics App
+
+## 📊 Comprensione dell'architettura osservabilità
+
+![OTEL](../imgs/architecture-with-router.png)
+
+**Flusso dei dati:**
+1. **App pods** espongono metriche su endpoint `/metrics`
+2. **OTEL for metrics app** fa scraping di metriche tramite service discovery e reinoltra
+3. **Exporter** invia a sistemi centrali di raccolta metriche
+4. **Collectors** aggrega, memorizza e visualizza
 
 ### 6. Personalizzare la configurazione
 
@@ -131,78 +141,16 @@ helm upgrade otel --install .\.helm\ -n <proprio-namespace> -f .\deploy-cli\valu
 
 ```bash
 # Verificare i pod del collettore
-oc get pods -l app.kubernetes.io/name=otel
-
-# Verificare la configurazione
-oc get configmap otel-opentelemetry-collector
-
-# Log del collettore
-oc logs -l app.kubernetes.io/name=otel
+oc get pods -l app.kubernetes.io/name=otel-for-metrics-app
 ```
 
 ---
 
 ## 📈 Test della raccolta metriche
 
-### 9. Generare traffico applicativo
+### 9. Generare operazioni applicative
 
-Per vedere metriche significative, generiamo attività nell'app:
-
-```bash
-# Script per generare traffico (loop)
-for i in {1..20}; do
-  curl.exe -X POST 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/' \
-    -H 'Content-Type: application/json' \
-    -d "{\"customer_name\":\"Customer_$i\",\"product\":\"Product_$i\",\"quantity\":$i}"
-  
-  curl.exe 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'
-  sleep 2
-done
-```
-
-### 10. Verificare raccolta metriche
-
-```bash
-# Log del collettore per vedere metriche raccolte
-oc logs -l app.kubernetes.io/name=otel | grep "orders"
-
-# Endpoint metriche del collettore (se esposto)
-oc port-forward svc/otel-opentelemetry-collector 8888:8888
-# Poi visitare: http://localhost:8888/metrics
-```
-
----
-
-## 📊 Comprensione dell'architettura osservabilità
-
-```mermaid
-graph LR
-    subgraph "Application Pods"
-        Backend[Backend<br/>:8000/metrics]
-        Frontend[Frontend<br/>:80/metrics]
-    end
-    
-    subgraph "Observability"
-        Collector[OpenTelemetry<br/>Collector]
-        Central[Central Monitoring<br/>System]
-    end
-    
-    Backend -->|scrape| Collector
-    Frontend -->|scrape| Collector
-    Collector -->|forward| Central
-    
-    classDef app fill:#e1f5fe
-    classDef obs fill:#f3e5f5
-    
-    class Backend,Frontend app
-    class Collector,Central obs
-```
-
-**Flusso dei dati:**
-1. **App pods** espongono metriche su endpoint `/metrics`
-2. **OpenTelemetry Collector** raccoglie metriche tramite service discovery
-3. **Collector** filtra, trasforma e invia al sistema centrale
-4. **Sistema centrale** aggrega, memorizza e visualizza
+Per vedere metriche significative, generiamo attività nell'app creando nuovi ordini, direttamente dall'interfaccia web dell'applicazione stessa.
 
 ---
 
@@ -213,20 +161,6 @@ graph LR
 L'istruttore mostrerà:
 - **Dashboard Grafana** con metriche aggregate
 - **Query PromQL** per analisi dati
-- **Alert** configurati su soglie critiche
-- **Trends** storici delle metriche business
-
-**Esempi di metriche visualizzate:**
-```promql
-# Rate di creazione ordini per minuto
-rate(orders_created_total[1m])
-
-# Latenza 95° percentile API
-histogram_quantile(0.95, http_request_duration_seconds_bucket)
-
-# Errori HTTP per endpoint
-rate(http_requests_total{status=~"5.."}[5m])
-```
 
 ---
 
