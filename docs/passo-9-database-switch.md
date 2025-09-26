@@ -53,7 +53,7 @@ oc edit configmap/workshop-backend-config
 
 ## 🔄 Processo di migrazione
 
-### 4. Restart del backend per applicare le nuove configurazioni
+### 2. Restart del backend per applicare le nuove configurazioni
 
 ```bash
 # Trigger restart per caricare nuova configurazione
@@ -68,7 +68,7 @@ oc rollout status deployment workshop-backend
 
 ## 🧪 Test della nuova configurazione
 
-### 5. Test completo dell'applicazione migrata
+### 3. Test completo dell'applicazione migrata
 
 1. **Accedere all'applicazione web**
 2. **Creare un nuovo ordine** - dovrebbe:

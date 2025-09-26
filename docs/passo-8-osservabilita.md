@@ -156,7 +156,7 @@ Per vedere metriche significative, generiamo attività nell'app creando nuovi or
 
 ## 🎯 Dashboard e Visualizzazione
 
-### 11. Visualizzazione dashboard (**solo istruttore**)
+### 10. Visualizzazione dashboard (**solo istruttore**)
 
 L'istruttore mostrerà:
 - **Dashboard Grafana** con metriche aggregate
