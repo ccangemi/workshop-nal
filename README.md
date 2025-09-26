@@ -1,132 +1,183 @@
-# Kubernetes/OpenShift Workshop
+# Workshop di Deployment su OpenShift
 
-A complete containerized application demonstrating modern web development practices with Kubernetes/OpenShift deployment capabilities.
+Un workshop completo per apprendere il deployment di applicazioni containerizzate su OpenShift attraverso un'applicazione 3-tier moderna.
 
-## 🏗️ Architecture
+## � Panoramica del Workshop
 
-This workshop features a full-stack application with:
+Questo workshop ti guida attraverso il deployment di un'applicazione containerizzata completa su OpenShift utilizzando:
 
-- **Frontend**: React TypeScript SPA with modern UI
-- **Backend**: Python FastAPI with CRUD operations
-- **Database**: MariaDB with persistent data
-- **Containerization**: Docker containers for all services
-- **Orchestration**: Kubernetes/OpenShift ready
+- **Frontend**: React TypeScript SPA con interfaccia moderna
+- **Backend**: Python FastAPI con operazioni CRUD complete  
+- **Database**: MariaDB con storage persistente
+- **Containerization**: Container Docker per tutti i servizi
+- **Orchestration**: Deployment nativo Kubernetes/OpenShift
+
+## 🚀 Accesso al Workshop
+
+**👉 [INIZIA IL WORKSHOP](./docs/README.md)**
+
+Il workshop è organizzato in **9 passi incrementali** che ti guideranno dal setup iniziale al deployment completo dell'applicazione:
+
+| Passo | Titolo | Focus |
+|-------|--------|-------|
+| **[Passo 1](./docs/passo-1-configurazione.md)** | Configurazione dell'Ambiente | Setup repository e tool OpenShift |
+| **[Passo 2](./docs/passo-2-esplorazione.md)** | Esplorazione dell'ambiente | Web GUI e CLI di OpenShift |
+| **[Passo 3](./docs/passo-3-primi-passi.md)** | Primi passi | Pod e Deployment fondamentali |
+| **[Passo 4](./docs/passo-4-applicazione.md)** | L'applicazione del workshop | Architettura 3-tier |
+| **[Passo 5](./docs/passo-5-database.md)** | Deployment del Database | MariaDB con storage persistente |
+| **[Passo 6](./docs/passo-6-backend.md)** | Deployment dell'API Backend | FastAPI con REST API |
+| **[Passo 7](./docs/passo-7-frontend.md)** | Deployment del Frontend | React SPA con routing |
+| **[Passo 8](./docs/passo-8-osservabilita.md)** | Osservabilità | Metriche e monitoring |
+| **[Passo 9](./docs/passo-9-database-switch.md)** | Migrazione database | Switch a database centralizzato |
+
+## ✨ Caratteristiche del Workshop
+
+### 📚 **Struttura Modulare**
+- **Guide step-by-step** con obiettivi chiari per ogni passo
+- **Navigazione interconnessa** tra le sezioni
+- **Checkpoint di verifica** per validare i progressi
+- **Troubleshooting dedicato** per ogni componente
+
+### 🛠️ **Tecnologie Pratiche**
+- **OpenShift/Kubernetes** - Pattern di deployment enterprise
+- **Container Docker** - Best practices per containerizzazione
+- **Storage Persistente** - Gestione dati con PVC e StatefulSet
+- **Service Mesh** - Comunicazione sicura tra servizi
+- **Osservabilità** - Metriche e monitoring con OpenTelemetry
+
+### 🎯 **Obiettivi di Apprendimento**
+Al termine del workshop, sarai in grado di:
+
+- ✅ Deployare applicazioni 3-tier su OpenShift
+- ✅ Gestire storage persistente e database
+- ✅ Configurare networking e routing
+- ✅ Implementare osservabilità e monitoring  
+- ✅ Gestire configurazioni e secrets
+- ✅ Eseguire migrazioni e scaling di applicazioni
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Docker
-- Basic understanding of containerization concepts
+### Prerequisiti
+- Accesso a cluster OpenShift
+- Docker Desktop installato
+- VS Code installato
 
-### Getting Started
+### Come iniziare
 
-1. **Clone the repository**
-2. **Follow service-specific setup instructions:**
-   - [`backend/README.md`](backend/README.md) - API service setup and configuration
-   - [`frontend/README.md`](frontend/README.md) - Web interface setup and configuration
-3. **Start services** as documented in each component's README
+**👉 [ACCEDI AL WORKSHOP COMPLETO](./docs/README.md)**
 
-### Service Architecture
+1. **Clona il repository**
+2. **Segui la guida passo-passo** iniziando dal [Passo 1](./docs/passo-1-configurazione.md)
+3. **Completa i checkpoint** per verificare i progressi
+4. **Deploy dell'applicazione completa** su OpenShift
 
-- **Frontend Service**: Modern web interface (port 3000)
-- **Backend Service**: RESTful API (port 8000)
-- **Database Service**: Persistent data storage (port 3306)
-
-Each service can be run independently or as part of the complete stack.
-
-## 📁 Project Structure
+## 📁 Struttura del Progetto
 
 ```
 workshop/
-├── backend/                 # Python FastAPI backend
-│   ├── app/                # Application modules
-│   │   ├── config/         # Database configuration
-│   │   ├── models/         # Data models
-│   │   ├── repositories/   # Data access layer
-│   │   └── routes/         # API endpoints
-│   ├── Dockerfile          # Backend container config
-│   ├── requirements.txt    # Python dependencies
-│   └── README.md          # Backend documentation
-├── frontend/               # React TypeScript frontend
-│   ├── src/               # Source code
-│   │   ├── components/    # React components
-│   │   ├── services/      # API integration
-│   │   └── types/         # TypeScript definitions
-│   ├── public/            # Static assets
-│   ├── Dockerfile         # Frontend container config
-│   ├── package.json       # Node.js dependencies
-│   └── README.md         # Frontend documentation
-├── imgs/                  # Workshop images and assets
-├── CLAUDE.md             # AI assistant instructions
-└── README.md             # This file
+├── docs/                    # 📚 Workshop modulare
+│   ├── README.md           # Indice principale del workshop
+│   ├── passo-1-configurazione.md
+│   ├── passo-2-esplorazione.md
+│   ├── ... (passi 3-9)
+│   └── passo-9-database-switch.md
+├── backend/                 # ⚙️ Python FastAPI backend
+│   ├── app/                # Moduli applicazione
+│   │   ├── config/         # Configurazione database
+│   │   ├── models/         # Modelli dati
+│   │   ├── repositories/   # Layer accesso dati
+│   │   └── routes/         # Endpoint API
+│   ├── Dockerfile          # Configurazione container backend
+│   ├── requirements.txt    # Dipendenze Python
+│   └── README.md          # Documentazione backend
+├── frontend/               # 🖥️ React TypeScript frontend
+│   ├── src/               # Codice sorgente
+│   │   ├── components/    # Componenti React
+│   │   ├── services/      # Integrazione API
+│   │   └── types/         # Definizioni TypeScript
+│   ├── public/            # Asset statici
+│   ├── Dockerfile         # Configurazione container frontend
+│   ├── package.json       # Dipendenze Node.js
+│   └── README.md         # Documentazione frontend
+├── openshift/              # 🚢 Manifesti Kubernetes/OpenShift
+│   ├── test-pod.yaml      # Pod di test
+│   ├── local-db.yaml      # Database MariaDB
+│   ├── backend-deployment.yaml    # Deployment backend
+│   ├── backend-network.yaml       # Service e Route backend
+│   └── frontend-deployment.yaml   # Deployment frontend
+├── db-init/               # 🗄️ Script inizializzazione DB
+└── setup-scripts/        # 🛠️ Script automazione
 ```
 
-## 🔧 Features
+## 🔧 Componenti dell'Architettura
 
-### Backend (FastAPI)
-- **RESTful API** with full CRUD operations
-- **Database Integration** with MariaDB/MySQL support
-- **CORS Configuration** for browser compatibility
-- **API Documentation** with automatic Swagger generation
-- **Docker Support** with multi-stage builds
-- **Environment Configuration** via environment variables
+### 🖥️ Frontend (React TypeScript)
+- **React 18 moderno** con TypeScript
+- **Design responsivo** con CSS personalizzato
+- **Configurazione runtime** - URL API configurabile senza rebuild
+- **Containerizzazione Docker** con Nginx
+- **Gestione errori** con feedback user-friendly
+- **Interfaccia CRUD** per gestione ordini
 
-### Frontend (React)
-- **Modern React 18** with TypeScript
-- **Responsive Design** with custom CSS utilities
-- **Runtime Configuration** - API URL configurable without rebuilds
-- **Docker Containerization** with Nginx serving
-- **Error Handling** with user-friendly feedback
-- **CRUD Interface** for order management
+### ⚙️ Backend (FastAPI Python)
+- **API RESTful** con operazioni CRUD complete
+- **Integrazione Database** con supporto MariaDB/MySQL
+- **Configurazione CORS** per compatibilità browser
+- **Documentazione API** con generazione automatica Swagger
+- **Supporto Docker** con build multi-stage
+- **Configurazione ambiente** tramite variabili d'ambiente
+- **Metriche Prometheus** per osservabilità
 
-### Database
-- **MariaDB** with persistent storage
-- **Structured Schema** with proper indexing
-- **Sample Data** for demonstration
-- **Docker Ready** with initialization scripts
+### 🗄️ Database (MariaDB)
+- **Storage persistente** con StatefulSet
+- **Schema strutturato** con indexing appropriato
+- **Dati di esempio** per dimostrazione
+- **Docker ready** con script di inizializzazione
 
-## 🔄 Development Workflow
+## 🔄 Scenari del Workshop
 
-### Local Development
-Each service has its own development setup documented in its respective README:
-- **Backend**: Python virtual environment with FastAPI development server
-- **Frontend**: Node.js with hot-reload development server
-- **Database**: Docker container or local installation
+Il progetto dimostra:
 
-### Container Development
-All services are containerized with Docker for consistent deployment:
-- Multi-stage builds for optimized production images
-- Environment variable configuration
-- Health checks and proper service dependencies
+1. **🐳 Containerizzazione**: Best practice Docker per applicazioni web
+2. **🔗 Microservizi**: Servizi frontend/backend separati
+3. **💾 Integrazione Database**: Dati persistenti con MariaDB
+4. **⚙️ Gestione Configurazioni**: Configurazione basata su ambiente
+5. **📡 Sviluppo API**: Servizi RESTful con documentazione
+6. **🖥️ Frontend Moderno**: React con TypeScript e design responsivo
+7. **📊 Osservabilità**: Metriche e monitoring applicativo
+8. **🔐 Gestione Secrets**: Credenziali e configurazioni sensibili
 
-Refer to individual service documentation for specific build and run commands.
+## 🔗 Risorse e Riferimenti
 
-## 🎯 Workshop Scenarios
+### 📚 **Documentazione Ufficiale**
+- **[OpenShift Documentation](https://docs.openshift.com/)** - Documentazione completa OpenShift
+- **[Kubernetes Documentation](https://kubernetes.io/docs/)** - Guida ufficiale Kubernetes
+- **[12-Factor App Methodology](https://12factor.net/)** - Best practices per applicazioni cloud-native
 
-This project demonstrates:
+### 🛠️ **Tool e Servizi**
+- **OpenShift CLI**: [Download oc](https://developers.redhat.com/learning/learn:openshift:download-and-install-red-hat-openshift-cli/resource/resources:download-and-install-oc)
+- **Cluster OpenShift del Workshop**: https://console.ocp4azexp2.cloudsvil.poste.it/
+- **Container Best Practices**: [10 Things to Avoid](https://developers.redhat.com/blog/2016/02/24/10-things-to-avoid-in-docker-containers)
 
-1. **Containerization**: Docker best practices for web applications
-2. **Microservices**: Separate frontend/backend services
-3. **Database Integration**: Persistent data with MariaDB
-4. **Configuration Management**: Environment-based configuration
-5. **API Development**: RESTful services with documentation
-6. **Modern Frontend**: React with TypeScript and responsive design
+### 🚢 **Deployment e DevOps**
+L'applicazione è progettata per deployment facile su:
+- **🐳 Docker locale** (sviluppo)
+- **📦 Docker Compose** (testing)
+- **☸️ Kubernetes** (produzione)
+- **🔴 OpenShift** (enterprise)
 
-## 🔗 OpenShift Resources
+Ogni servizio include health check appropriati, limiti di risorse e capacità di scaling.
 
-- **OpenShift CLI**: https://developers.redhat.com/learning/learn:openshift:download-and-install-red-hat-openshift-cli/resource/resources:download-and-install-oc
-- **OpenShift Console**: https://console.ocp4azexp2.cloudsvil.poste.it/
+## 🤝 Contribuire
 
-## 🚢 Deployment
+Questo è un progetto workshop per apprendere i pattern di deployment Kubernetes/OpenShift. Sentiti libero di estendere e modificare per le tue esigenze di apprendimento.
 
-The application is designed for easy deployment to:
-- **Local Docker** (development)
-- **Docker Compose** (testing)
-- **Kubernetes** (production)
-- **OpenShift** (enterprise)
+---
 
-Each service includes proper health checks, resource limits, and scaling capabilities.
+## 🚀 Inizia Subito
 
-## 🤝 Contributing
+**👉 [ACCEDI AL WORKSHOP COMPLETO](./docs/README.md)**
 
-This is a workshop project for learning Kubernetes/OpenShift deployment patterns. Feel free to extend and modify for your learning needs.
+Oppure vai direttamente al primo passo:
+
+**🎯 [Passo 1: Configurazione dell'Ambiente →](./docs/passo-1-configurazione.md)**
