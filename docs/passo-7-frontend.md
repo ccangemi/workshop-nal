@@ -99,25 +99,22 @@ graph TB
       subgraph "Namespace: wsnal-<user>"
          Internet[🌐 Browser Internet]
          RouteFrontend[Route<br/>workshop-frontend]
-         RouteBackend[Route<br/>workshop-backend]
          ServiceFrontend[Service<br/>workshop-frontend]
-         ServiceBackend[Service<br/>workshop-backend]
          Frontend[Pod: Frontend<br/>React SPA]
+         RouteBackend[Route<br/>workshop-backend]
+         ServiceBackend[Service<br/>workshop-backend]
          Backend[Pod: Backend<br/>FastAPI]
          ServiceDB[Service<br/>mariadb]
          Database[(StatefulSet: MariaDB<br/>Persistent Storage)]
 
          Internet --> RouteFrontend
-         Internet --> RouteBackend
-
          RouteFrontend --> ServiceFrontend
          ServiceFrontend --> Frontend
+         Frontend --> Internet
 
+         Internet --> RouteBackend
          RouteBackend --> ServiceBackend
          ServiceBackend --> Backend
-
-         Frontend --> ServiceBackend
-
          Backend --> ServiceDB
          ServiceDB --> Database
       end
