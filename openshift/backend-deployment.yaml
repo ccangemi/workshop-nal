@@ -66,4 +66,4 @@ metadata:
     app: workshop-backend
 data:
   database-connection-string: "mysql+pymysql://workshop:workshop123@mariadb:3306/workshop_db"
-#  database-connection-string: 'mssql+pymssql://defaultMssqladmin:jqIGA9lx8Z_8D@%R@saiworkshopsql01azwe.database.windows.net:1433/db01'
+#  database-connection-string: 'mssql+pymssql://defaultMssqladmin:07V_oN_H3iau_3cW@saiworkshopsql01azwe.database.windows.net:1433/db01'

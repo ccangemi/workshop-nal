@@ -22,7 +22,7 @@ class OrderRepository:
         return self.db.query(Order).filter(Order.OrderId == order_id).first()
 
     def get_orders(self, skip: int = 0, limit: int = 100) -> List[Order]:
-        return self.db.query(Order).offset(skip).limit(limit).all()
+        return self.db.query(Order).order_by(Order.OrderId).offset(skip).limit(limit).all()
 
     def get_orders_count(self) -> int:
         return self.db.query(Order).count()
