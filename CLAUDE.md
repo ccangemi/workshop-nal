@@ -153,4 +153,4 @@ When working with this repository:
 
 The project is designed to be a comprehensive example of modern cloud-native application development suitable for Kubernetes/OpenShift deployment.
 
-# Dashboard grafana https://g-fd80ee42f3.grafana-workspace.eu-central-1.amazonaws.com/explore?orgId=1&left=%7B%22datasource%22:%22Ato7-MaIz%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22datasource%22:%7B%22type%22:%22prometheus%22,%22uid%22:%22Ato7-MaIz%22%7D,%22editorMode%22:%22code%22,%22expr%22:%22orders_total%7Bcluster_name%3D%5C%22ocp4azexp2.cloudsvil.poste.it%5C%22,%20namespace%3D%5C%22test%5C%22%7D%22,%22legendFormat%22:%22__auto%22,%22range%22:true,%22instant%22:true%7D%5D,%22range%22:%7B%22from%22:%22now-5m%22,%22to%22:%22now%22%7D%7D
+# Dashboard grafana https://g-fd80ee42f3.grafana-workspace.eu-central-1.amazonaws.com/d/Q6lw743Hk/workshop-nal
