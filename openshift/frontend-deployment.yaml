@@ -61,7 +61,7 @@ metadata:
   labels:
     app: workshop-frontend
 data:
-  api-url: "https://workshop-backend-test.apps.ocp4azexp2.cloudsvil.poste.it"
+  api-url: "https://workshop-backend-<mio-namespace>.apps.ocp4azexp2.cloudsvil.poste.it"
 ---
 apiVersion: v1
 kind: Service

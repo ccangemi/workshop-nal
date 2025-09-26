@@ -13,6 +13,9 @@ Iniziamo creando il database nel quale verranno registrati permanentemente gli o
 
 ## 🚀 Deploy del Database
 
+> Analizzare il contenuto del file `./openshift/local-db.yaml`
+> Notare le sezioni riguardanti `env`, `liveness|readinessProbe`, `resources`, `volumeClaimTemplates`, il `Service` ed il `Secret`
+
 ### 1. Creazione delle risorse database
 
 ```bash
@@ -24,19 +27,19 @@ oc create -f ./openshift/local-db.yaml
 Osserva l'inizializzazione del database:
 
 ```bash
-# Monitoraggio in tempo reale (Ctrl+C per interrompere)
-oc get pod -w
-```
+# Monitoraggio in tempo reale
+oc get pod -owide -w 
 
-**Cosa osservare:**
-- Status del pod: `Pending` → `ContainerCreating` → `Running`
-- Eventuale download dell'immagine container
+# Ctrl+C per interrompere)
+```
 
 **Alternativa - Web GUI:**
 - Navigare a: Workloads → Pods
 - Monitorare lo status del pod MariaDB
 
 ### 3. Verifica degli oggetti creati
+
+> Analizzare gli oggetti creati, specialmente i concetti di PersistenceVolumeClaim e PersistenceVolume
 
 ```bash
 # Verificare il servizio di rete
@@ -65,7 +68,7 @@ oc get statefulset
 
 ### Perché StatefulSet per il Database?
 
-- **Identità stabile**: Il database ha sempre lo stesso nome di host
+- **Identità stabile**: Il database ha sempre lo stesso nome di host (eg: mariadb-0)
 - **Storage persistente**: I dati sopravvivono al restart del pod
 - **Startup ordinato**: Garantisce inizializzazione corretta
 - **Network identity**: DNS predicibile per connessioni
@@ -91,77 +94,16 @@ oc get statefulset
 Controlliamo che il database sia stato inizializzato correttamente:
 
 ```bash
-# Connettersi al pod del database
-oc exec -it <nome-pod-mariadb> -- mysql -u root -p
+# Connettersi al pod del database (tramite comando lanciato direttamente da dentro pod mariadb)
+# password: workshop123
+oc exec -it mariadb-0 -- mariadb -u root -p
 
 # All'interno del database MySQL:
 SHOW DATABASES;
-USE orders_db;
+USE workshop_db;
 SHOW TABLES;
-SELECT * FROM orders LIMIT 5;
+SELECT * FROM ORDERS LIMIT 5;
 EXIT;
-```
-
----
-
-## 🔍 Esplorazione delle risorse create
-
-### Storage Persistente
-
-```bash
-# Dettagli del PersistentVolumeClaim
-oc describe pvc mariadb-data
-
-# Visualizzare i volumi disponibili
-oc get pv
-```
-
-### Servizi di rete
-
-```bash
-# Dettagli del servizio MariaDB
-oc describe service mariadb
-
-# Testare la connettività interna
-oc run mysql-client --image=mysql:5.7 -it --rm --restart=Never -- mysql -h mariadb -u root -p
-```
-
-### Logs del database
-
-```bash
-# Visualizzare i log del database
-oc logs <nome-pod-mariadb>
-
-# Seguire i log in tempo reale
-oc logs -f <nome-pod-mariadb>
-```
-
----
-
-## 🛠️ Troubleshooting comune
-
-### Pod rimane in stato Pending
-
-**Possibili cause:**
-- Risorse insufficienti nel cluster
-- PVC non può essere creato
-
-**Debug:**
-```bash
-oc describe pod <nome-pod-mariadb>
-oc get events --sort-by='.lastTimestamp'
-```
-
-### Database non si inizializza
-
-**Possibili cause:**
-- Script di init fallito
-- Permessi incorretti
-
-**Debug:**
-```bash
-oc logs <nome-pod-mariadb>
-oc exec -it <nome-pod-mariadb> -- bash
 ```
 
 ---
@@ -173,7 +115,6 @@ Prima di procedere al passo successivo, verifica che:
 - [ ] Il pod MariaDB sia in stato `Running`
 - [ ] Il PVC sia `Bound`
 - [ ] Il database sia inizializzato con le tabelle
-- [ ] Puoi connetterti al database da un pod di test
 
 **Comandi di verifica rapida:**
 ```bash

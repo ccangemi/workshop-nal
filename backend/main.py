@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from dotenv import load_dotenv
+import logging
 from app.routes.orders import router as orders_router
 from app.metrics import get_metrics, get_content_type, update_orders_total_metric
 from app.middleware.metrics_middleware import MetricsMiddleware
@@ -18,6 +19,14 @@ app = FastAPI(
     description="A RESTful API for managing orders with CRUD operations",
     version="1.0.0"
 )
+
+# Define the filter
+class EndpointFilter(logging.Filter):
+    def filter(self, record: logging.LogRecord) -> bool:
+        return record.args and len(record.args) >= 3 and record.args[2] != "/health" and record.args[2] != "/metrics"
+
+# Add filter to the logger
+logging.getLogger("uvicorn.access").addFilter(EndpointFilter())
 
 # Configure middlewares
 app.add_middleware(MetricsMiddleware)

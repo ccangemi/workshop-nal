@@ -1,6 +1,6 @@
 # Workshop di Deployment su OpenShift
 
-Un workshop completo per apprendere il deployment di applicazioni containerizzate su OpenShift attraverso un'applicazione 3-tier moderna.
+Un workshop completo per apprendere il deployment di applicazioni containerizzate su OpenShift attraverso un'applicazione 3-tier.
 
 ## � Panoramica del Workshop
 
@@ -29,21 +29,6 @@ Il workshop è organizzato in **9 passi incrementali** che ti guideranno dal set
 | **[Passo 7](./docs/passo-7-frontend.md)** | Deployment del Frontend | React SPA con routing |
 | **[Passo 8](./docs/passo-8-osservabilita.md)** | Osservabilità | Metriche e monitoring |
 | **[Passo 9](./docs/passo-9-database-switch.md)** | Migrazione database | Switch a database centralizzato |
-
-## ✨ Caratteristiche del Workshop
-
-### 📚 **Struttura Modulare**
-- **Guide step-by-step** con obiettivi chiari per ogni passo
-- **Navigazione interconnessa** tra le sezioni
-- **Checkpoint di verifica** per validare i progressi
-- **Troubleshooting dedicato** per ogni componente
-
-### 🛠️ **Tecnologie Pratiche**
-- **OpenShift/Kubernetes** - Pattern di deployment enterprise
-- **Container Docker** - Best practices per containerizzazione
-- **Storage Persistente** - Gestione dati con PVC e StatefulSet
-- **Service Mesh** - Comunicazione sicura tra servizi
-- **Osservabilità** - Metriche e monitoring con OpenTelemetry
 
 ### 🎯 **Obiettivi di Apprendimento**
 Al termine del workshop, sarai in grado di:

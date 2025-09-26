@@ -15,6 +15,10 @@ Completiamo lo stack aggiungendo l'ultimo layer: il frontend React TypeScript.
 
 ### 1. Creare il deployment del frontend
 
+- Aprire su VS Code il file `./openshift/frontend-deployment.yaml`
+- Analizzare la struttura ed intercettare la `ConfigMap`
+- Modificare il valore dell'attributo `api-url` sostituendo il nome del proprio namespace all'interno della url della rotta
+
 ```bash
 oc create -f ./openshift/frontend-deployment.yaml
 ```
@@ -47,7 +51,7 @@ oc get route workshop-frontend -o jsonpath='{.spec.host}'
 
 **Output esempio:**
 ```
-workshop-frontend-wsnal-user01.apps.ocp4azexp2.cloudsvil.poste.it
+workshop-frontend-ws-user01.apps.ocp4azexp2.cloudsvil.poste.it
 ```
 
 ### 4. Accedere all'applicazione
@@ -69,50 +73,19 @@ Ora possiamo testare l'intera catena applicativa:
 #### Operazioni CRUD da testare:
 
 1. **CREATE**: Creare un nuovo ordine
-   - Compilare il form con: Nome cliente, Prodotto, Quantità
-   - Cliccare "Crea Ordine"
+   - Cliccare "Create New Order"
+   - Compilare il form inserendo "Order details"
    - Verificare che appaia nella lista
 
-2. **READ**: Visualizzare gli ordini esistenti
-   - La homepage dovrebbe mostrare tutti gli ordini
-   - Includendo quelli inseriti durante l'inizializzazione del DB
-
-3. **UPDATE**: Modificare un ordine esistente
+2. **UPDATE**: Modificare un ordine esistente
    - Cliccare su "Modifica" per un ordine
-   - Cambiare alcuni valori
+   - Cambiare il valore di Order details
    - Salvare e verificare le modifiche
 
-4. **DELETE**: Eliminare un ordine
+3. **DELETE**: Eliminare un ordine
    - Cliccare su "Elimina" per un ordine
    - Confermare l'eliminazione
    - Verificare che non appaia più nella lista
-
----
-
-## 🔍 Monitoraggio dell'applicazione
-
-### 6. Osservare il traffico tra i servizi
-
-```bash
-# Log del frontend
-oc logs -l app=workshop-frontend
-
-# Log del backend (mostrare richieste API)
-oc logs -l app=workshop-backend
-
-# Log del database (se necessario)
-oc logs -l app=mariadb
-```
-
-### 7. Verificare la comunicazione inter-service
-
-```bash
-# Test connettività frontend -> backend
-oc exec -it <pod-frontend> -- curl http://workshop-backend:8000/health
-
-# Test connettività backend -> database  
-oc exec -it <pod-backend> -- mysql -h mariadb -u root -p -e "SELECT COUNT(*) FROM orders_db.orders;"
-```
 
 ---
 
@@ -122,77 +95,41 @@ A questo punto dovresti avere un'architettura completa:
 
 ```mermaid
 graph TB
-    subgraph "OpenShift Cluster"
-        subgraph "Namespace: wsnal-<user>"
-            Internet[🌐 Internet] --> Route1[Route<br/>workshop-frontend]
-            Route1 --> Service1[Service<br/>workshop-frontend]
-            Service1 --> Frontend[Pod: Frontend<br/>React SPA]
-            
-            Frontend --> Service2[Service<br/>workshop-backend]
-            Service2 --> Backend[Pod: Backend<br/>FastAPI]
-            
-            Backend --> Service3[Service<br/>mariadb]
-            Service3 --> Database[(StatefulSet: MariaDB<br/>Persistent Storage)]
-        end
-    end
-    
-    classDef frontend fill:#e1f5fe
-    classDef backend fill:#f3e5f5  
-    classDef database fill:#e8f5e8
-    
-    class Frontend frontend
-    class Backend backend
-    class Database database
-```
+   subgraph "OpenShift Cluster"
+      subgraph "Namespace: wsnal-<user>"
+         Internet[🌐 Browser Internet]
+         RouteFrontend[Route<br/>workshop-frontend]
+         RouteBackend[Route<br/>workshop-backend]
+         ServiceFrontend[Service<br/>workshop-frontend]
+         ServiceBackend[Service<br/>workshop-backend]
+         Frontend[Pod: Frontend<br/>React SPA]
+         Backend[Pod: Backend<br/>FastAPI]
+         ServiceDB[Service<br/>mariadb]
+         Database[(StatefulSet: MariaDB<br/>Persistent Storage)]
 
----
+         Internet --> RouteFrontend
+         Internet --> RouteBackend
 
-## 🛠️ Troubleshooting comune
+         RouteFrontend --> ServiceFrontend
+         ServiceFrontend --> Frontend
 
-### Frontend non carica
+         RouteBackend --> ServiceBackend
+         ServiceBackend --> Backend
 
-**Possibili cause:**
-- Route non configurata correttamente
-- Pod frontend non in running
-- Errori di build del container
+         Frontend --> ServiceBackend
 
-**Debug:**
-```bash
-oc describe route workshop-frontend
-oc logs <pod-frontend>
-oc describe pod <pod-frontend>
-```
+         Backend --> ServiceDB
+         ServiceDB --> Database
+      end
+   end
 
-### Frontend carica ma non mostra dati
+   classDef frontend fill:#e1f5fe
+   classDef backend fill:#f3e5f5  
+   classDef database fill:#e8f5e8
 
-**Possibili cause:**
-- Backend non raggiungibile dal frontend
-- Configurazione URL backend errata
-- Problemi CORS
-
-**Debug:**
-```bash
-# Verificare configurazione frontend
-oc describe configmap workshop-frontend-config
-
-# Testare connettività interna
-oc exec -it <pod-frontend> -- curl http://workshop-backend:8000/api/v1/orders/
-```
-
-### Errori nelle operazioni CRUD
-
-**Possibili cause:**
-- Database non accessibile
-- Errori nella logica backend
-- Problemi di permessi
-
-**Debug:**
-```bash
-# Log dettagliati backend
-oc logs <pod-backend> -f
-
-# Connessione diretta al database
-oc exec -it <pod-mariadb> -- mysql -u root -p
+   class Frontend frontend
+   class Backend backend
+   class Database database
 ```
 
 ---

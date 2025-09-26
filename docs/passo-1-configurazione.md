@@ -8,6 +8,12 @@
 
 ---
 
+## Recap OpenShift
+
+OpenShift è una piattaforma Kubernetes enterprise che semplifica il deployment, la gestione e il monitoraggio di applicazioni containerizzate. Rispetto a Kubernetes "puro", OpenShift offre funzionalità aggiuntive come un'interfaccia utente integrata, strumenti di sicurezza avanzati, gestione dei permessi più granulare e un'esperienza DevOps più completa. In sintesi, OpenShift estende Kubernetes con strumenti pronti all'uso per sviluppatori e operatori, facilitando la collaborazione e l'automazione dei processi.
+
+![Architettura ambiente comune OpenShift](../imgs/common-environment-ocp-architecture.png)
+
 ## Setup del repo del progetto su Visual Studio Code
 
 1. Accedere a `https://github.com/ccangemi/workshop-nal/blob/master/WORKSHOP.md`
@@ -20,16 +26,18 @@
 
 ## Setup dei tool di OpenShift
 
-1. Accedere a: `https://console.ocp4azexp2.cloudsvil.poste.it/` ed effettuare login tramite SSO aziendale (selezionare il pulsante AAD)
-2. Selezionare il pulsante (?) in alto a destra e scegliere la voce "Command Line Tools"
-3. Scaricare la versione del client `oc` compatibile col proprio sistema
+1. Accedere a: `https://console.ocp4azexp2.cloudsvil.poste.it/k8s/cluster/projects/ws-<username>` ed effettuare login tramite SSO aziendale (selezionare il pulsante AAD)
+2. Alla prima apertura verranno visualizzati dei messaggi e wizard introduttivi. Selezionare Close
+3. Aprire il menu in alto a sinistra ("Developer") e selezionare la prospettiva "Administrator" 
+4. Selezionare il pulsante (?) in alto a destra e scegliere la voce "Command Line Tools"
+5. Scaricare la versione del client `oc` compatibile col proprio sistema
    
    **Ad esempio, per Windows:**
    1. Selezionare "Download oc for Windows for x86_64"
    2. Una volta scaricato lo zip estrarre il suo contenuto (`oc.exe`) nella directory `C:\Users\<username>\AppData\Local\Microsoft\WindowsApps` (sostituire con il proprio username)
-   3. Scaricare `https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/helm/3.17.1/helm-windows-amd64.exe` nella stessa directory di sopra
+6. Scaricare `https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/helm/3.17.1/helm-windows-amd64.exe` nella stessa directory di sopra
 
-4. **Verificare il corretto funzionamento:**
+7. **Verificare il corretto funzionamento:**
    1. Aprire terminale da VS Code: Menu Terminal → New Terminal
    2. Digitare `oc version` e `helm version`
 

@@ -9,8 +9,10 @@
 ---
 
 ## 🏗️ Architettura dell'Applicazione
+L'applicazione che installeremo è una versione molto semplice di un gestionale di ordini.  
+Permette la creazione, modifica ed eliminazione di ordini fittizi molto semplificati. 
 
-L'applicazione che deployeremo è una classica architettura a **3 livelli (3-tier)**:
+L'applicazione è una classica architettura a **3 livelli (3-tier)**:
 
 ```mermaid
 graph TB
@@ -54,35 +56,6 @@ graph TB
   - Storage persistente degli ordini
   - Transazioni ACID
   - Backup e recovery
-
----
-
-## 📂 Struttura dei file nel repository
-
-Esploriamo la struttura del progetto:
-
-```
-workshop/
-├── frontend/           # React TypeScript app
-│   ├── src/
-│   ├── public/
-│   ├── Dockerfile
-│   └── package.json
-├── backend/            # FastAPI Python app  
-│   ├── app/
-│   ├── main.py
-│   ├── Dockerfile
-│   └── requirements.txt
-├── openshift/          # Manifesti Kubernetes/OpenShift
-│   ├── test-pod.yaml
-│   ├── test-deployment.yaml
-│   ├── local-db.yaml
-│   ├── backend-deployment.yaml
-│   ├── backend-network.yaml
-│   └── frontend-deployment.yaml
-└── db-init/           # Script inizializzazione DB
-    └── 01-init-orders.sql
-```
 
 ---
 

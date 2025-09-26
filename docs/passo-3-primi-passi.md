@@ -14,17 +14,19 @@ In questa sezione proveremo a creare un pod di prova utilizzando sia la CLI che 
 
 ### Setup iniziale
 
-1. Accedere al proprio namespace: 
+1. Accedere al proprio namespace se non lo si è già fatto: 
    ```bash
-   oc project wsnal-<user>
+   oc project ws-<user>
    ```
 2. Verificare che il namespace sia vuoto:
    ```bash
    oc get pod
    ```
-   Il comando dovrebbe restituire: `No resources found in wsnal-<user> namespace.`
+   Il comando dovrebbe restituire: `No resources found in ws-<username> namespace.`
 
 ### Creazione del Pod
+
+> Visualizzare il contenuto del file `./openshift/test-pod.yaml` da VSCode
 
 3. Creare un pod di prova:
    ```bash
@@ -40,15 +42,10 @@ In questa sezione proveremo a creare un pod di prova utilizzando sia la CLI che 
    oc get pod example -o yaml
    ```
 
-### Analisi teorica: Struttura di un Pod
-
-Un Pod è l'unità più piccola deployabile in Kubernetes e rappresenta:
-- Uno o più container che condividono storage e rete
-- Un indirizzo IP condiviso
-- Volumi condivisi
-- Ciclo di vita comune
+> Analizzeremo la struttura del pod nel prossimo passo, tramite interfaccia Web
 
 ### Analisi tramite Web GUI
+5. Tornare alla GUI di OpenShift (selezionare il tab della console web di OpenShift in caso non sia già quello attivo)
 
 6. **Analizzare il pod nell'interfaccia web:** 
    - Navigare a: Workloads → Pods → `example`
@@ -57,7 +54,7 @@ Un Pod è l'unità più piccola deployabile in Kubernetes e rappresenta:
      - **Metrics**: Metriche di CPU, memoria, rete
      - **Logs**: Log output del container
      - **Terminal**: Accesso shell al container
-   - **Esplorare il menu Actions**: Start, Stop, Delete, Edit, ecc.
+   - **Esplorare il menu Actions**: Delete, Edit, ecc.
 
 7. Eliminare il pod:
    ```bash
@@ -79,6 +76,11 @@ Un **Deployment** offre vantaggi significativi rispetto a un Pod standalone:
 
 ### Creazione del Deployment
 
+> Analizzare la struttura del file `./openshift/test-deployment.yaml`:
+> - `replicas`
+> - `selector`
+> - `template`
+
 1. Creare un deployment di prova:
    ```bash
    oc create -f ./openshift/test-deployment.yaml
@@ -86,12 +88,14 @@ Un **Deployment** offre vantaggi significativi rispetto a un Pod standalone:
 
 2. Osservare la creazione automatica dei pod:
    ```bash
-   # Visualizzare tutti gli oggetti creati
-   oc get all
+   # Visualizzare il deployment creato
+   oc get deployment example-deployment
    
    # Visualizzare solo i pod con label specifico
    oc get pods -l app=httpd
    ```
+
+> Analizzare la struttura di un deployment dalla Web GUI: Workloads -> Deployments -> example-deployment
 
 ### Esperimenti di resilienza e scaling
 
@@ -115,7 +119,19 @@ Un **Deployment** offre vantaggi significativi rispetto a un Pod standalone:
    oc get pods -l app=httpd
    ```
 
-5. **Cleanup:** Eliminare il deployment (eliminerà anche tutti i pod):
+5. **Test di Rollout:** Effettuare un aggiornamento del deployment a caldo:
+   ```bash
+   oc rollout restart deployment workshop-backend
+   
+   # Visualizzare lo stato dei pod/ReplicaSet anche nella Web GUI (Deployment)
+   oc get pods -l app=httpd
+   ```
+
+> E' possibile eseguire le stesse operazione da Web console.
+
+
+
+6. **Cleanup:** Eliminare il deployment (eliminerà anche tutti i pod):
    ```bash
    oc delete deployment example-deployment
    ```

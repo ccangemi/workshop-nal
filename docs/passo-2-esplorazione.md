@@ -29,6 +29,7 @@ Durante il workshop lavoreremo con questi oggetti:
 - **`Secret`** - Memorizza informazioni sensibili (password, token, ecc.)
 - **`PersistentVolume(Claim)`** - Gestisce lo storage persistente
 
+![Componenti Kubernetes/OpenShift](../imgs/network.png)
 ---
 
 ## oc CLI
@@ -36,9 +37,10 @@ Durante il workshop lavoreremo con questi oggetti:
 ### Effettuare login su terminale
 
 1. Nella web GUI di OpenShift, fare click su menu proprio user in alto a destra
-2. Copy login command → SSO (AAD) → Display token → Copia comando `oc login ...`
-3. Esecuzione del comando di login su proprio terminale VS Code
+2. Selezionare "Copy login command" → SSO (AAD) → Display token → Copia in clipboard (ctrl+c) il comando `oc login --token=...` che compare nella pagina
+3. Esegui il comando di login sul proprio terminale VS Code aperto prima
 4. Confermare con `y` alla domanda "Use insecure connections?"
+5. Esegui la selezione del progetto digitando `oc project ws-<username>`
 
 ### Sintassi dei comandi della CLI
 
@@ -72,7 +74,7 @@ oc describe pod nome-pod
 
 - **Web GUI**: Ottima per visualizzazione e monitoraggio
 - **CLI**: Più efficiente per operazioni ripetitive e automazione
-- **YAML files**: Preferred way per definire risorse in modo dichiarativo
+- **YAML files**: Modalità più indicata per definire risorse in modo dichiarativo
 
 ---
 

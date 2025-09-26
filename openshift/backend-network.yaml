@@ -22,6 +22,8 @@ metadata:
   labels:
     app: workshop-backend
     component: api
+  annotations:
+    haproxy.router.openshift.io/balance: roundrobin
 spec:
   to:
     kind: Service

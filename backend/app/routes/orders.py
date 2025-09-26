@@ -8,6 +8,9 @@ from app.metrics import orders_created_total, orders_updated_total, orders_delet
 
 router = APIRouter(prefix="/orders", tags=["orders"])
 
+# Contatore globale per le invocazioni del metodo GET /orders
+get_orders_invocation_count = 0
+
 @router.post("/", response_model=OrderResponse, status_code=status.HTTP_201_CREATED)
 def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     repository = OrderRepository(db)
@@ -25,6 +28,12 @@ def create_order(order: OrderCreate, db: Session = Depends(get_db)):
 
 @router.get("/", response_model=List[OrderResponse])
 def get_orders(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    global get_orders_invocation_count
+    get_orders_invocation_count += 1
+    
+    # Stampa il numero totale delle invocazioni
+    print(f"invocazioni totali del metodo GET /orders: {get_orders_invocation_count}")
+    
     repository = OrderRepository(db)
     orders = repository.get_orders(skip=skip, limit=limit)
     # Update total orders count

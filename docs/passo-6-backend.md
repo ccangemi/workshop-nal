@@ -14,6 +14,8 @@ Procediamo creando lo strato di backend dell'applicazione. Questo container sa c
 
 ## 🐳 Build dell'immagine Docker
 
+> Analizzare la struttura del file `./backend/Dockerfile`
+
 ### 1. Build dell'immagine del backend
 
 ```bash
@@ -23,6 +25,8 @@ docker build .\backend\ -t postesviluppo.azurecr.io/cangem/workshop-backend
 **Nota importante:** L'immagine deve essere pushata su un registry accessibile da OpenShift.
 
 ### 2. Push dell'immagine (se necessario)
+
+**QUESTO PASSO SOLO PER L'ISTRUTTORE**
 
 ```bash
 # Login al registry (se richiesto)
@@ -35,6 +39,9 @@ docker push postesviluppo.azurecr.io/cangem/workshop-backend
 ---
 
 ## 🚀 Deploy del Backend
+
+> Analizzare il file `./openshift/backend-deployment.yaml`
+> Fare attenzione al campo `spec.containers[].image`
 
 ### 3. Creare il deployment del backend
 
@@ -49,8 +56,6 @@ oc create -f ./openshift/backend-deployment.yaml
 ### 4. Verificare gli oggetti creati
 
 ```bash
-# Visualizzare tutti gli oggetti
-oc get all
 
 # Focus su deployment e configmap
 oc get deployment,configmap
@@ -59,11 +64,15 @@ oc get deployment,configmap
 oc describe deployment workshop-backend
 ```
 
+> **Il parametro database-connection-string punta al nostro db locale tramite service:porta (mariadb:3306)**
+
 ---
 
 ## 🌐 Configurazione di rete
 
 ### 5. Creare gli oggetti di rete
+
+> Analizzare il file `./openshift/backend-network.yaml`
 
 ```bash
 oc create -f ./openshift/backend-network.yaml
@@ -83,6 +92,8 @@ oc get service,route
 oc describe route workshop-backend
 ```
 
+> Osservare la URL della rotta
+
 ---
 
 ## 🧪 Testing delle API
@@ -91,7 +102,7 @@ oc describe route workshop-backend
 
 Le API FastAPI generano automaticamente una documentazione interattiva:
 
-1. Aprire il browser sull'URL: `https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/docs`
+1. Aprire il browser sull'URL: `https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.poste.it/docs`
 2. Esplorare le API disponibili
 3. Testare alcune chiamate direttamente dal browser
 
@@ -100,11 +111,6 @@ Le API FastAPI generano automaticamente una documentazione interattiva:
 ```bash
 # Ottenere lista degli ordini
 curl.exe 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'
-
-# Creare un nuovo ordine (esempio)
-curl.exe -X POST 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/' \
-  -H 'Content-Type: application/json' \
-  -d '{"customer_name":"Test Customer","product":"Test Product","quantity":1}'
 ```
 
 > **Importante su Windows:** Usare `curl.exe` non semplicemente `curl`
@@ -119,13 +125,15 @@ curl.exe -X POST 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloud
 # Scalare a 3 repliche
 oc scale deployment workshop-backend --replicas=3
 
-# Verificare che i pod siano stati creati
-oc get pods -l app=workshop-backend
+# Verificare che i pod siano stati creati (notase l'appartenenza a nodi diversi)
+oc get pod -l app=workshop-backend -owide
 
 # Verificare distribuzione del carico
-for i in {1..10}; do
-  curl.exe -s 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/health' | grep hostname
-done
+# Esegui la curl 5 volte (o più)
+curl.exe 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'
+
+# Verifica dai log dei pod che l'operazione sia stata invocata su diversi pod
+oc logs -l app=workshop-backend -f # in alternativa visualizzare i log da Web
 ```
 
 **Cosa osservare:**
@@ -135,69 +143,12 @@ done
 
 ---
 
-## 🔍 Monitoraggio e debugging
-
-### Log dell'applicazione
-
-```bash
-# Log di tutti i pod del backend
-oc logs -l app=workshop-backend
-
-# Log di un pod specifico
-oc logs <nome-pod-backend>
-
-# Seguire i log in tempo reale
-oc logs -f <nome-pod-backend>
-```
-
-### Connessione al container
-
-```bash
-# Shell nel container
-oc exec -it <nome-pod-backend> -- /bin/bash
-
-# Verificare connettività al database
-oc exec -it <nome-pod-backend> -- curl http://mariadb:3306
-```
-
 ### Health checks
 
 ```bash
 # Verificare endpoint di health
 curl.exe 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/health'
 
-# Metrics endpoint (se abilitato)
-curl.exe 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/metrics'
-```
-
----
-
-## 🛠️ Troubleshooting comune
-
-### Pod rimane in CrashLoopBackOff
-
-**Possibili cause:**
-- Errore di connessione al database
-- Configurazione errata nelle variabili d'ambiente
-- Immagine non trovata o corrotta
-
-**Debug:**
-```bash
-oc describe pod <nome-pod-backend>
-oc logs <nome-pod-backend>
-```
-
-### Route non raggiungibile
-
-**Possibili cause:**
-- DNS non risolto
-- Certificati SSL
-- Firewall o policy di rete
-
-**Debug:**
-```bash
-oc describe route workshop-backend
-nslookup workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it
 ```
 
 ---
