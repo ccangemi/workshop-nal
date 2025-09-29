@@ -64,7 +64,7 @@ oc get deployment,configmap
 oc describe deployment workshop-backend
 ```
 
-> **Il parametro database-connection-string punta al nostro db locale tramite service:porta (mariadb:3306)**
+> **Il parametro database-connection-string dovrebbe puntare al nostro db locale tramite service:porta (mariadb:3306), ma ATTENZIONE...**
 
 ---
 
@@ -115,17 +115,37 @@ curl.exe 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.pos
 
 > **Importante su Windows:** Usare `curl.exe` non semplicemente `curl`
 
+**ERRORE: Interla Server Error**
 ---
 
 ### 9. **Correzione e Rollout:** Effettuare un aggiornamento del deployment a caldo:
+1. Analizziamo quale sia il problema:
+```bash
+oc logs deployment/workshop-backend
+```
 
+Errore:  
+```
+"Can't connect to MySQL server on '<nome-service-db>' ([Errno -2] Name or service not known)"
+```
 
-   ```bash
-   oc rollout restart deployment workshop-backend
-   
-   # Visualizzare lo stato dei pod/ReplicaSet anche nella Web GUI (Deployment)
-   oc get pods -l app=httpd
-   ```
+2. Correggiamo la config map da Web GUI andando in Workload -> ConfigMaps -> `workshop-backend-config` -> Actions (pulsante in alto a destra) -> "Edit ConfigMap"
+3. Salvare con "Save"
+4. riavviamo il Deployment con:
+
+```bash
+oc rollout restart deployment workshop-backend
+
+# Visualizzare lo stato dei pod/ReplicaSet anche nella Web GUI (Deployment)
+oc get pods -l app=httpd
+```
+
+5. Testiamo di nuovo:
+
+```bash
+# Ottenere lista degli ordini
+curl.exe 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'
+```
 
 ## 📈 Scaling e Load Balancing
 
@@ -135,7 +155,7 @@ curl.exe 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.pos
 # Scalare a 3 repliche
 oc scale deployment workshop-backend --replicas=3
 
-# Verificare che i pod siano stati creati (notase l'appartenenza a nodi diversi)
+# Verificare che i pod siano stati creati (notare l'appartenenza a nodi diversi)
 oc get pod -l app=workshop-backend -owide
 
 # Verificare distribuzione del carico
@@ -160,6 +180,7 @@ oc logs -l app=workshop-backend -f # in alternativa visualizzare i log da Web
 curl.exe 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/health'
 
 ```
+> Questo è il meccanismo che usa la kubelet per verificare se il container è healthy e/o ready
 
 ---
 

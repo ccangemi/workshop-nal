@@ -47,6 +47,9 @@ graph LR
 ```bash
 # Edit della ConfigMap per puntare al nuovo database MSSQL centralizzato
 oc edit configmap/workshop-backend-config
+
+# sostituire
+# database-connection-string: 'mssql+pymssql://defaultMssqladmin:07V_oN_H3iau_3cW@saiworkshopsql01azwe.database.windows.net:1433/db01'
 ```
 
 ---

@@ -201,7 +201,7 @@ curl.exe 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.i
 
 ## 🚀 Prossimo passo
 
-**Continua con:** [Passo 9: Collegare il database →](./passo-9-database-switch.md)
+**Continua con:** [Passo 9: Collegare il database centralizzato →](./passo-9-database-switch.md)
 
 ## 🔙 Navigazione
 

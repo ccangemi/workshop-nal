@@ -68,7 +68,7 @@ workshop-frontend-ws-user01.apps.ocp4azexp2.cloudsvil.poste.it
 
 Ora possiamo testare l'intera catena applicativa:
 
-**Frontend → Backend → Database → Backend → Frontend**
+**Frontend → Backend → Database**
 
 #### Operazioni CRUD da testare:
 

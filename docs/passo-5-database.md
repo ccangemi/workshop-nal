@@ -13,7 +13,7 @@ Iniziamo creando il database nel quale verranno registrati permanentemente gli o
 
 ## 🚀 Deploy del Database
 
-> Analizzare il contenuto del file `./openshift/local-db.yaml`
+> Analizzare il contenuto del file `./openshift/local-db.yaml`  
 > Notare le sezioni riguardanti `env`, `liveness|readinessProbe`, `resources`, `volumeClaimTemplates`, il `Service` ed il `Secret`
 
 ### 1. Creazione delle risorse database
