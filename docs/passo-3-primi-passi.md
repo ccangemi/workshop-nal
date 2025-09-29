@@ -20,7 +20,7 @@ In questa sezione proveremo a creare un pod di prova utilizzando sia la CLI che 
    ```
 2. Verificare che il namespace sia vuoto:
    ```bash
-   oc get pod
+   oc get pods
    ```
    Il comando dovrebbe restituire: `No resources found in ws-<username> namespace.`
 
@@ -104,8 +104,8 @@ Un **Deployment** offre vantaggi significativi rispetto a un Pod standalone:
    # Segnarsi il nome di un pod
    oc get pods -l app=httpd
    
-   # Eliminare il pod
-   oc delete pod <nome_pod>
+   # Eliminare tutti i pod
+   oc delete pods --all=true
    
    # Osservare che viene ricreato automaticamente
    oc get pods -l app=httpd
@@ -119,19 +119,11 @@ Un **Deployment** offre vantaggi significativi rispetto a un Pod standalone:
    oc get pods -l app=httpd
    ```
 
-5. **Test di Rollout:** Effettuare un aggiornamento del deployment a caldo:
-   ```bash
-   oc rollout restart deployment workshop-backend
-   
-   # Visualizzare lo stato dei pod/ReplicaSet anche nella Web GUI (Deployment)
-   oc get pods -l app=httpd
-   ```
 
 > E' possibile eseguire le stesse operazione da Web console.
 
 
-
-6. **Cleanup:** Eliminare il deployment (eliminerà anche tutti i pod):
+5. **Cleanup:** Eliminare il deployment (eliminerà anche tutti i pod):
    ```bash
    oc delete deployment example-deployment
    ```

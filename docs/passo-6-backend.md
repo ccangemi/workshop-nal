@@ -117,9 +117,19 @@ curl.exe 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.pos
 
 ---
 
+### 9. **Correzione e Rollout:** Effettuare un aggiornamento del deployment a caldo:
+
+
+   ```bash
+   oc rollout restart deployment workshop-backend
+   
+   # Visualizzare lo stato dei pod/ReplicaSet anche nella Web GUI (Deployment)
+   oc get pods -l app=httpd
+   ```
+
 ## 📈 Scaling e Load Balancing
 
-### 9. Testare lo scaling del backend
+### 10. Testare lo scaling del backend
 
 ```bash
 # Scalare a 3 repliche
