@@ -40,7 +40,10 @@ Durante il workshop lavoreremo con questi oggetti:
 2. Selezionare "Copy login command" → SSO (AAD) → Display token → Copia in clipboard (ctrl+c) il comando `oc login --token=...` che compare nella pagina
 3. Esegui il comando di login sul proprio terminale VS Code aperto prima
 4. Confermare con `y` alla domanda "Use insecure connections?"
-5. Esegui la selezione del progetto digitando `oc project ws-<username>`
+5. Esegui la selezione del progetto digitando 
+```bash
+oc project ws-<username>
+```
 
 ### Sintassi dei comandi della CLI
 

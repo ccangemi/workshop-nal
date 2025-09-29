@@ -16,7 +16,7 @@ L'applicazione è una classica architettura a **3 livelli (3-tier)**:
 
 ```mermaid
 graph TB
-    U[👥 Utenti] --> F[🖥️ Frontend<br/>React TypeScript SPA]
+    U[👥 Utente] --> F[🖥️ Frontend<br/>React TypeScript SPA]
     F --> B[⚙️ Backend<br/>Python FastAPI REST API]
     B --> D[🗄️ Database<br/>MariaDB]
     
@@ -49,6 +49,8 @@ graph TB
   - Connessione al database
   - Documentazione automatica (Swagger/OpenAPI)
   - Metriche per osservabilità
+
+![REST](../imgs/rest.png)
 
 #### 🗄️ **Database** - MariaDB
 - **Tecnologia**: MariaDB (MySQL-compatible)
