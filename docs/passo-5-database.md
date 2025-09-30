@@ -73,6 +73,8 @@ oc get statefulset
 - **Startup ordinato**: Garantisce inizializzazione corretta
 - **Network identity**: DNS predicibile per connessioni
 
+![sset](../imgs/sset.png)
+
 ---
 
 ## 🔧 Inizializzazione del Database

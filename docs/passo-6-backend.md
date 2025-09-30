@@ -94,6 +94,7 @@ oc describe route workshop-backend
 
 > Osservare la URL della rotta
 
+![backend](../imgs/backend.png)
 ---
 
 ## 🧪 Testing delle API

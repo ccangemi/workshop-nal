@@ -74,6 +74,8 @@ Un **Deployment** offre vantaggi significativi rispetto a un Pod standalone:
 - **Rolling updates:** Può aggiornare l'applicazione senza tempi di inattività
 - **Declarative management:** Kubernetes garantisce che lo stato desiderato venga mantenuto
 
+![deployment](../imgs/deploy.png)
+
 ### Creazione del Deployment
 
 > Analizzare la struttura del file `./openshift/test-deployment.yaml`:
