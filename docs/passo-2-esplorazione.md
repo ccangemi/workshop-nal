@@ -20,6 +20,7 @@
 
 Durante il workshop lavoreremo con questi oggetti:
 
+- **`Namespace`** - Raggruppamento logico di oggetti Kubernetes
 - **`Pod`** - Unità base di deployment, contenente uno o più container
 - **`Deployment`** - Gestisce la creazione e l'aggiornamento dei Pod
 - **`ReplicaSet`** - Mantiene il numero desiderato di repliche di un Pod
@@ -29,7 +30,7 @@ Durante il workshop lavoreremo con questi oggetti:
 - **`Secret`** - Memorizza informazioni sensibili (password, token, ecc.)
 - **`PersistentVolume(Claim)`** - Gestisce lo storage persistente
 
-![Componenti Kubernetes/OpenShift](../imgs/network.png)
+![Componenti Kubernetes/OpenShift](../imgs/kubernetes.png)
 ---
 
 ## oc CLI
