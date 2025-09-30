@@ -116,7 +116,7 @@ curl.exe 'https://workshop-backend-<tuo-namespace>.apps.ocp4azexp2.cloudsvil.pos
 
 > **Importante su Windows:** Usare `curl.exe` non semplicemente `curl`
 
-**ERRORE: Interla Server Error**
+**ERRORE: Internal Server Error**
 ---
 
 ### 9. **Correzione e Rollout:** Effettuare un aggiornamento del deployment a caldo:
