@@ -44,7 +44,7 @@ Se la propria username è, ad esempio, CANGEM25, il nome del namespace sarà: ws
    
    **Ad esempio, per Windows:**
    1. Selezionare "Download oc for Windows for x86_64"
-   2. Una volta scaricato lo zip estrarre il suo contenuto (`oc.exe`) nella directory `C:\Users\<username>\AppData\Local\Microsoft\WindowsApps` (sostituire con il proprio username)
+   2. Una volta scaricato lo zip estrarre il suo contenuto (`oc.exe`) nella directory `C:\Users\<username>\AppData\Local\Microsoft\WindowsApps\` (sostituire con il proprio username)
 6. Scaricare `https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/helm/3.17.1/helm-windows-amd64.exe` nella stessa directory di sopra
 
 7. **Verificare il corretto funzionamento:**
