@@ -19,6 +19,7 @@ function Test-OCLogin {
 function New-WorkshopNamespace {
     param([string]$Username, [bool]$DryRunMode)
     $namespaceName = "ws-$($Username.ToLower())"
+    $subject = "$($Username)@posteitaliane.it"
     Write-Host "Processing user: $Username -> $namespaceName" -ForegroundColor Yellow
     
     if ($DryRunMode) {
@@ -41,9 +42,9 @@ function New-WorkshopNamespace {
         if ($LASTEXITCODE -ne 0) { throw "Failed to add labels" }
         
         Write-Host "Creating rolebinding..." -ForegroundColor Green
-        oc create rolebinding "$Username-admin" --clusterrole=admin --user=$Username -n $namespaceName 2>$null
+        oc create rolebinding "$Username-admin" --clusterrole=admin --user=$subject -n $namespaceName 2>$null
         if ($LASTEXITCODE -ne 0) {
-            oc patch rolebinding "$Username-admin" -n $namespaceName --type=merge -p="{\"subjects\":[{\"kind\":\"User\",\"name\":\"$Username\",\"apiGroup\":\"rbac.authorization.k8s.io\"}]}" 2>$null
+            oc patch rolebinding "$Username-admin" -n $namespaceName --type=merge -p="{\"subjects\":[{\"kind\":\"User\",\"name\":\"$subject\",\"apiGroup\":\"rbac.authorization.k8s.io\"}]}" 2>$null
         }
         
         Write-Host "User setup completed: $Username" -ForegroundColor Green
