@@ -63,18 +63,7 @@ annotations:
 
 ## 🔧 Setup del collettore di metriche
 
-### 4. Clonare il repository osservabilità
-
-Aprire una **nuova istanza** di VSCode:
-
-1. File → New Window
-2. Explorer → Clone Repository  
-3. URL: `https://gitlab.alm.poste.it/hybridcloud/gen3/observability-2.0/otel-for-metrics-app.git`
-4. Selezionare cartella locale
-5. Aprire il repository clonato
-6. Confermare "Yes, I trust the authors"
-
-### 5. Comprendere Helm Charts
+### 4. Comprendere Helm Charts
 
 **Cos'è un Helm Chart?**
 
@@ -110,9 +99,9 @@ chart/
 3. **Exporter** invia a sistemi centrali di raccolta metriche
 4. **Collectors** aggrega, memorizza e visualizza
 
-### 6. Personalizzare la configurazione
+### 5. Personalizzare la configurazione
 
-1. Aprire il file `./deploy-cli/values.yaml`
+1. Aprire il file `./otel/values.yaml`
 2. Trovare la sezione `regex_metric_relabel_configs`
 3. Modificare per catturare solo le metriche degli ordini:
 
@@ -125,10 +114,10 @@ regex_metric_relabel_configs: "orders.*"
 - Riduce il carico sui sistemi di monitoring
 - Focus su metriche business-relevant
 
-### 7. Installare il collettore nel proprio namespace
+### 6. Installare il collettore nel proprio namespace
 
 ```bash
-helm upgrade otel --install .\.helm\ -n <proprio-namespace> -f .\deploy-cli\values.yaml
+helm install otel .\otel\otel-for-metrics-app-1.1.0.tgz -n <mio_namespace> -f .\otel\values.yaml
 ```
 
 **Cosa viene installato:**
@@ -137,7 +126,7 @@ helm upgrade otel --install .\.helm\ -n <proprio-namespace> -f .\deploy-cli\valu
 - **Service**: Endpoint per raccolta metriche
 - **ServiceAccount**: Permessi per service discovery
 
-### 8. Verificare l'installazione
+### 7. Verificare l'installazione
 
 ```bash
 # Verificare i pod del collettore
@@ -148,7 +137,7 @@ oc get pods -l app.kubernetes.io/name=otel-for-metrics-app
 
 ## 📈 Test della raccolta metriche
 
-### 9. Generare operazioni applicative
+### 8. Generare operazioni applicative
 
 Per vedere metriche significative, generiamo attività nell'app creando nuovi ordini, direttamente dall'interfaccia web dell'applicazione stessa.
 
@@ -156,7 +145,7 @@ Per vedere metriche significative, generiamo attività nell'app creando nuovi or
 
 ## 🎯 Dashboard e Visualizzazione
 
-### 10. Visualizzazione dashboard (**solo istruttore**)
+### 9. Visualizzazione dashboard (**solo istruttore**)
 
 L'istruttore mostrerà:
 - **Dashboard Grafana** con metriche aggregate
