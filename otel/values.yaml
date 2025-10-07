@@ -1,0 +1,75 @@
+# QUESTO E'UN ESEMPIO... CONFIGURA QUI LO SCRAPING DELLE METRICHE ESPOSTE DAI POD
+# Note:
+#  - I jobs possono essere dplicati e ogni job sarà eseguito da un thread separato
+#  - Aggiungi solo le metriche nel job generico otel-metrics-app-custom oppure crea altri job oppure scommenta quelli commentati se i componenti che devi monitorare coincidono con uns dei template commentati (golang, jvm, tomcat,...)
+#  - Le metriche riportate nei template ereditano l'applicazione di alcune best practices sul monitoraggio
+#  - Per tutti i parametri, anche quelli non riportati qui, è possibile fare override. 
+#    Fare riferimento al values.yaml di default presente nel chart helm e alla docmentazione del chart di opentelemetry per una vista completa 
+
+cluster_gen: "3" # [ 2 | 3 ] Release del cluster di destinazione
+
+# SET PROJECT PARAMETERS TO QUALIFY OTEL-APP POD
+goto:
+  # Deployment/Pod labels & annotations
+  apcode: "example-ap-code"                        # Required ex: AP-123456
+  apname: "example-ap-name"                        # Required ex: AP-MYNAME
+  pkcode: "example-pk-code"                        # Required ex: PK-123456
+  pkname: "example-pk-name"                        # Required ex: PK-MYNAME
+  dto_account_l3: "example-dto-account"            # Required
+  pm_tecnico_referente_progetto: "example-pm"      # Required
+  codice_iniziativa_goto: "example-cod-iniziativa" # Optional
+  documento_rilascio: "example-doc-rilascio"       # Optional
+  nome_progetto: "example-nome-progetto"           # Optional
+
+# CAMBIARE SOLO PER INSTALLAZIONI MULTIPLE DI OTEL-APP NELLO STESSO NAMESPACE
+#fullnameOverride: "otel-for-metrics-app"
+
+prometheusConfig:
+  default_scrape_interval: 60s
+  scrape_jobs:
+
+    ## Custom Metrics
+    - job_name: otel-metrics-app-custom
+      #  - split each metric by '|'
+      #  - regular expression (i.g.: ^my_groupname_.* ) supported
+      regex_metric_relabel_configs: ""
+
+      ## TEMPLATE PER GOLANG
+      #- job_name: otel-metrics-template-go-gc
+      #  regex_metric_relabel_configs: "go_gc_duration_seconds_count|go_gc_duration_seconds_sum|go_gc_duration_seconds"
+      #- job_name: otel-metrics-template-go-memstats
+      #  regex_metric_relabel_configs: "go_memstats_alloc_bytes_total|go_memstats_alloc_bytes|go_memstats_frees_total|go_memstats_gc_cpu_fraction|go_memstats_gc_sys_bytes|go_memstats_heap_alloc_bytes|go_memstats_heap_idle_bytes|go_memstats_heap_inuse_bytes|go_memstats_heap_objects|go_memstats_heap_released_bytes|go_memstats_heap_sys_bytes|go_memstats_mallocs_total|go_memstats_mcache_inuse_bytes|go_memstats_mcache_sys_bytes|go_memstats_mspan_inuse_bytes|go_memstats_mspan_sys_bytes|go_memstats_next_gc_bytes|go_memstats_stack_inuse_bytes|go_memstats_stack_sys_bytes|go_memstats_sys_bytes"
+      #- job_name: otel-metrics-template-go-other
+      #  regex_metric_relabel_configs: "go_goroutines|go_info|go_threads"
+
+      ## TEMPLATE PER JVM
+      #- job_name: otel-metrics-app-template-jvm
+      #  regex_metric_relabel_configs: "jvm_memory_used_bytes|jvm_memory_max_bytes|jvm_memory_committed_bytes|jvm_gc_pause_seconds_sum|jvm_gc_pause_seconds_count|jvm_buffer_memory_used_bytes|jvm_buffer_total_capacity_bytes|jvm_gc_memory_allocated_bytes_total|jvm_gc_memory_promoted_bytes_total"
+
+      ## TEMPLATE SPRINGBOOT
+      #- job_name: otel-metrics-app-template-http-server
+      #  regex_metric_relabel_configs: "http_server_requests_seconds_count|http_server_requests_seconds_max|http_server_requests_seconds_sum|http_server_requests_active_seconds_sum|http_server_requests_active_seconds_max|http_server_requests_active_seconds_count|tomcat_sessions_active_current_sessions|tomcat_sessions_active_max_sessions|tomcat_sessions_alive_max_seconds|tomcat_sessions_created_sessions_total|tomcat_sessions_expired_sessions_total|tomcat_sessions_rejected_sessions_total"
+      #- job_name: otel-metrics-app-template-process
+      #  regex_metric_relabel_configs: "process_cpu_usage|process_start_time_seconds|process_uptime_seconds"
+      #- job_name: otel-metrics-app-template-system
+      #  regex_metric_relabel_configs: "system_cpu_count|system_cpu_usage"
+      #- job_name: otel-metrics-app-template-spring-application
+      #  regex_metric_relabel_configs: "application_ready_time_seconds|application_started_time_seconds"
+
+      ## TEMPLATE PER LOGBACK
+      #- job_name: otel-metrics-app-template-logback
+      #  regex_metric_relabel_configs: "logback_events_total"
+
+# PER TROUBLESHOOTING...
+telemetrylogLevel: error # can be: [ debug | info | warn | error]
+exporterDebugLogLevel: basic # can be: [ detailed | normal | basic ]
+
+# PER TUNING SULLE RISORSE
+resources:
+  limits:
+    cpu: 200m
+    memory: 1Gi
+  requests:
+    cpu: 100m
+    memory: 512Mi
+
