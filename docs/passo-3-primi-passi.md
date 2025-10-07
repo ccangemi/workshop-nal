@@ -16,13 +16,13 @@ In questa sezione proveremo a creare un pod di prova utilizzando sia la CLI che 
 
 1. Accedere al proprio namespace se non lo si è già fatto: 
    ```bash
-   oc project ws-<mia-username>
+   oc project ws-<mio-username>
    ```
 2. Verificare che il namespace sia vuoto:
    ```bash
    oc get pods
    ```
-   Il comando dovrebbe restituire: `No resources found in ws-<mia-username> namespace.`
+   Il comando dovrebbe restituire: `No resources found in ws-<mio-username> namespace.`
 
 ### Creazione del Pod
 

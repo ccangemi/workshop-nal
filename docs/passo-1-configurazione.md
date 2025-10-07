@@ -32,9 +32,9 @@ In sintesi, OpenShift estende Kubernetes con strumenti pronti all'uso per svilup
 
 ## Setup dei tool di OpenShift
 
-1. Accedere a: `https://console.ocp4azexp2.cloudsvil.poste.it/k8s/cluster/projects/ws-<mia_username>` ed effettuare login tramite SSO aziendale (selezionare il pulsante AAD)
+1. Accedere a: `https://console.ocp4azexp2.cloudsvil.poste.it/k8s/cluster/projects/ws-<mio_username>` ed effettuare login tramite SSO aziendale (selezionare il pulsante AAD)
 
-**ATTENZIONE:** Nel corso del workshop si farà spesso riferimento al proprio namespace secondo la dicitura ws-<mia_username>  
+**ATTENZIONE:** Nel corso del workshop si farà spesso riferimento al proprio namespace secondo la dicitura ws-<mio_username>  
 Se la propria username è, ad esempio, CANGEM25, il nome del namespace sarà: ws-cangem25 **TUTTO MINUSCOLO**
 
 2. Alla prima apertura verranno visualizzati dei messaggi e wizard introduttivi. Selezionare Close, in questo caso
@@ -44,7 +44,7 @@ Se la propria username è, ad esempio, CANGEM25, il nome del namespace sarà: ws
    
    **Ad esempio, per Windows:**
    1. Selezionare "Download oc for Windows for x86_64"
-   2. Una volta scaricato lo zip estrarre il suo contenuto (**solo il file `oc.exe`**) nella directory `C:\Users\<username>\AppData\Local\Microsoft\WindowsApps\` **(sostituire con il proprio username)**
+   2. Una volta scaricato lo zip estrarre il suo contenuto (**solo il file `oc.exe`**) nella directory `C:\Users\<mio_username>\AppData\Local\Microsoft\WindowsApps\` **(sostituire con il proprio username)**
 6. Scaricare `https://developers.redhat.com/content-gateway/file/pub/openshift-v4/clients/helm/3.17.1/helm-windows-amd64.exe` nella stessa directory di sopra  
 **(Se la url non è accessibile, provare da https://get.helm.sh/helm-v3.19.0-windows-arm64.zip)**
 7. **Verificare il corretto funzionamento:**

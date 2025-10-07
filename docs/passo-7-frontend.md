@@ -96,7 +96,7 @@ A questo punto dovresti avere un'architettura completa:
 ```mermaid
 graph TB
    subgraph "OpenShift Cluster"
-      subgraph "Namespace: wsnal-<user>"
+      subgraph "Namespace: wsnal-<mio_username>"
          Internet[🌐 Browser Internet]
          RouteFrontend[Route<br/>workshop-frontend]
          ServiceFrontend[Service<br/>workshop-frontend]

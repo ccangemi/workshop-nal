@@ -22,7 +22,7 @@ Il backend FastAPI espone automaticamente metriche in formato Prometheus:
 oc get route workshop-backend -o jsonpath='{.spec.host}'
 ```
 
-1. Aprire il browser all'URL: `https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/metrics`
+1. Aprire il browser all'URL: `https://workshop-backend-ws-<mio_username>.apps.ocp4azexp2.cloudsvil.poste.it/metrics`
 
 2. **Analizzare le metriche disponibili:**
    - Metriche HTTP (richieste, latenza, codici di stato)
@@ -117,7 +117,7 @@ regex_metric_relabel_configs: "orders.*"
 ### 6. Installare il collettore nel proprio namespace
 
 ```bash
-helm install otel .\otel\otel-for-metrics-app-1.1.0.tgz -n <mio_namespace> -f .\otel\values.yaml
+helm install otel .\otel\otel-for-metrics-app-1.1.0.tgz -n ws-<mio_username> -f .\otel\values.yaml
 ```
 
 **Cosa viene installato:**
@@ -183,7 +183,7 @@ Prima di procedere al passo successivo, verifica che:
 ```bash
 oc get pods -l app.kubernetes.io/name=otel
 oc logs -l app.kubernetes.io/name=otel --tail=20
-curl.exe 'https://workshop-backend-<namespace>.apps.ocp4azexp2.cloudsvil.poste.it/metrics' | grep orders
+curl.exe 'https://workshop-backend-ws-<mio_username>.apps.ocp4azexp2.cloudsvil.poste.it/metrics' | grep orders
 ```
 
 ---

@@ -43,7 +43,7 @@ Durante il workshop lavoreremo con questi oggetti:
 4. Confermare con `y` alla domanda "Use insecure connections?"
 5. Esegui la selezione del progetto digitando 
 ```bash
-oc project ws-<mia-username>
+oc project ws-<mio-username>
 ```
 
 ### Sintassi dei comandi della CLI
