@@ -111,7 +111,7 @@ Le API FastAPI generano automaticamente una documentazione interattiva:
 
 ```bash
 # Ottenere lista degli ordini
-curl.exe 'https://workshop-backend-ws-<mio_username>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'
+curl.exe 'https://workshop-backend-ws-<mio_username>.apps.gen3gpazne.cloudsvil.poste.it/api/v1/orders/'
 ```
 
 > **Importante su Windows:** Usare `curl.exe` non semplicemente `curl`
@@ -145,7 +145,7 @@ oc get pods -l app=httpd
 
 ```bash
 # Ottenere lista degli ordini
-curl.exe 'https://workshop-backend-ws-<mio_username>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'
+curl.exe 'https://workshop-backend-ws-<mio_username>.apps.gen3gpazne.cloudsvil.poste.it/api/v1/orders/'
 ```
 
 ## 📈 Scaling e Load Balancing
@@ -161,7 +161,7 @@ oc get pod -l app=workshop-backend -owide
 
 # Verificare distribuzione del carico
 # Esegui la curl 5 volte (o più)
-curl.exe 'https://workshop-backend-ws-<mio_username>.apps.ocp4azexp2.cloudsvil.poste.it/api/v1/orders/'
+curl.exe 'https://workshop-backend-ws-<mio_username>.apps.gen3gpazne.cloudsvil.poste.it/api/v1/orders/'
 
 # Verifica dai log dei pod che l'operazione sia stata invocata su diversi pod
 oc logs -l app=workshop-backend -f # in alternativa visualizzare i log da Web
@@ -178,7 +178,7 @@ oc logs -l app=workshop-backend -f # in alternativa visualizzare i log da Web
 
 ```bash
 # Verificare endpoint di health
-curl.exe 'https://workshop-backend-ws-<mio_username>.apps.ocp4azexp2.cloudsvil.poste.it/health'
+curl.exe 'https://workshop-backend-ws-<mio_username>.apps.gen3gpazne.cloudsvil.poste.it/health'
 
 ```
 > Questo è il meccanismo che usa la kubelet per verificare se il container è healthy e/o ready
@@ -200,7 +200,7 @@ Prima di procedere al passo successivo, verifica che:
 oc get deployment workshop-backend
 oc get pods -l app=workshop-backend
 oc get route workshop-backend
-curl.exe 'https://workshop-backend-ws-<mio_username>.apps.ocp4azexp2.cloudsvil.poste.it/health'
+curl.exe 'https://workshop-backend-ws-<mio_username>.apps.gen3gpazne.cloudsvil.poste.it/health'
 ```
 
 ---
