@@ -32,7 +32,7 @@ In sintesi, OpenShift estende Kubernetes con strumenti pronti all'uso per svilup
 
 ## Setup dei tool di OpenShift
 
-1. Accedere a: `https://console.ocp4azexp2.cloudsvil.poste.it/k8s/cluster/projects/ws-<mio_username>` ed effettuare login tramite SSO aziendale (selezionare il pulsante AAD)
+1. Accedere a: [https://console.gen3gpazne.cloudsvil.poste.it/k8s/cluster/projects/ws-<mio_username>](https://console.gen3gpazne.cloudsvil.poste.it/k8s/cluster/projects/ws-nal) ed effettuare login tramite SSO aziendale (selezionare il pulsante AAD)
 
 **ATTENZIONE:** Nel corso del workshop si farà spesso riferimento al proprio namespace secondo la dicitura ws-<mio_username>  
 Se il proprio username è, ad esempio, CANGEM25, il nome del namespace sarà: ws-cangem25 **TUTTO MINUSCOLO**
