@@ -22,7 +22,7 @@ In sintesi, OpenShift estende Kubernetes con strumenti pronti all'uso per svilup
 
 ## Setup del repo del progetto su Visual Studio Code
 
-1. Accedere a `https://github.com/ccangemi/workshop-nal/blob/master/WORKSHOP.md`
+1. Accedere a [https://github.com/ccangemi/workshop-nal/blob/master/WORKSHOP.md](https://github.com/ccangemi/workshop-nal/blob/master/docs/README.md)
 2. Aprire VS Code sul proprio computer
 3. Espandere il menù a sinistra di VSCode → Explorer
 4. Selezionare "Clone Repository" ed inserire `https://github.com/ccangemi/workshop-nal.git`. Terminare selezionando "Clone from URL ..."
