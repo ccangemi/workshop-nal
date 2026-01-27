@@ -49,7 +49,7 @@ graph LR
 oc edit configmap/workshop-backend-config
 
 # sostituire
-# database-connection-string: 'mssql+pymssql://defaultMssqladmin:_6D4s94j%254hI%40MLP@saiworkshopsql01azwe.database.windows.net:1433/db01'
+# database-connection-string: 'mssql+pymssql://defaultMssqladmin@saiworkshopsql01azwe:4_Mp%25p8H0o9%25Nzy3@saiworkshopsql01azwe.database.windows.net:1433/db01'
 ```
 
 ---
